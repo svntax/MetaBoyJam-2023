@@ -65,7 +65,8 @@ func _process(delta):
 
 func _on_metaboy_selected(metaboy: MetaBoyData) -> void:
 	MetaBoyGlobals.selected_metaboy = metaboy
-	get_tree().change_scene("res://UI/CharacterDisplayScreen.tscn")
+	#get_tree().change_scene("res://UI/CharacterDisplayScreen.tscn")
+	get_tree().change_scene("res://UI/MapSelectScreen.tscn")
 
 func get_loopring_account() -> void:
 	var json = Loopring.get_account_object(LoopringGlobals.wallet)

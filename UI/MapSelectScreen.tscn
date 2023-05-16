@@ -1,0 +1,148 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://UI/MapSelectScreen.gd" type="Script" id=1]
+
+[node name="MapSelectScreen" type="Node2D"]
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="UI" type="Control" parent="."]
+margin_right = 640.0
+margin_bottom = 360.0
+mouse_filter = 1
+
+[node name="Header" type="Label" parent="UI"]
+margin_left = 64.0
+margin_top = 24.0
+margin_right = 181.0
+margin_bottom = 38.0
+text = "Map Select Screen"
+
+[node name="Maps" type="VBoxContainer" parent="UI"]
+margin_left = 64.0
+margin_top = 128.0
+margin_right = 224.0
+margin_bottom = 240.0
+custom_constants/separation = 32
+
+[node name="TutorialMapButton" type="Button" parent="UI/Maps"]
+margin_right = 160.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 160, 40 )
+text = "Abandoned Facility"
+
+[node name="CityMapButton" type="Button" parent="UI/Maps"]
+margin_top = 72.0
+margin_right = 160.0
+margin_bottom = 112.0
+rect_min_size = Vector2( 160, 40 )
+text = "City"
+
+[node name="MapInfoTutorial" type="Panel" parent="UI"]
+margin_left = 320.0
+margin_top = 64.0
+margin_right = 576.0
+margin_bottom = 320.0
+mouse_filter = 1
+
+[node name="MapNameLabel" type="Label" parent="UI/MapInfoTutorial"]
+margin_top = 16.0
+margin_right = 256.0
+margin_bottom = 30.0
+text = "Abandoned Facility"
+align = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/MapInfoTutorial"]
+margin_top = 48.0
+margin_right = 256.0
+margin_bottom = 256.0
+custom_constants/margin_right = 12
+custom_constants/margin_top = 12
+custom_constants/margin_left = 12
+custom_constants/margin_bottom = 12
+
+[node name="Content" type="VBoxContainer" parent="UI/MapInfoTutorial/MarginContainer"]
+margin_left = 12.0
+margin_top = 12.0
+margin_right = 244.0
+margin_bottom = 196.0
+custom_constants/separation = 12
+
+[node name="DifficultyLabel" type="Label" parent="UI/MapInfoTutorial/MarginContainer/Content"]
+margin_right = 232.0
+margin_bottom = 14.0
+text = "Difficulty: Tutorial"
+autowrap = true
+
+[node name="DescriptionLabel" type="Label" parent="UI/MapInfoTutorial/MarginContainer/Content"]
+margin_top = 26.0
+margin_right = 232.0
+margin_bottom = 57.0
+text = "A long-abandoned facility. Only a few guards and residents remain."
+autowrap = true
+
+[node name="MapInfoCity" type="Panel" parent="UI"]
+margin_left = 320.0
+margin_top = 64.0
+margin_right = 576.0
+margin_bottom = 320.0
+mouse_filter = 1
+
+[node name="MapNameLabel" type="Label" parent="UI/MapInfoCity"]
+margin_top = 16.0
+margin_right = 256.0
+margin_bottom = 30.0
+text = "City"
+align = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/MapInfoCity"]
+margin_top = 48.0
+margin_right = 256.0
+margin_bottom = 256.0
+custom_constants/margin_right = 12
+custom_constants/margin_top = 12
+custom_constants/margin_left = 12
+custom_constants/margin_bottom = 12
+
+[node name="Content" type="VBoxContainer" parent="UI/MapInfoCity/MarginContainer"]
+margin_left = 12.0
+margin_top = 12.0
+margin_right = 244.0
+margin_bottom = 196.0
+custom_constants/separation = 12
+
+[node name="DifficultyLabel" type="Label" parent="UI/MapInfoCity/MarginContainer/Content"]
+margin_right = 232.0
+margin_bottom = 14.0
+text = "Difficulty: Normal"
+autowrap = true
+
+[node name="DescriptionLabel" type="Label" parent="UI/MapInfoCity/MarginContainer/Content"]
+margin_top = 26.0
+margin_right = 232.0
+margin_bottom = 57.0
+text = "A large city run by an artificial intelligence."
+autowrap = true
+
+[node name="PlayButton" type="Button" parent="UI"]
+margin_left = 332.0
+margin_top = 268.0
+margin_right = 564.0
+margin_bottom = 308.0
+rect_min_size = Vector2( 160, 40 )
+size_flags_vertical = 10
+text = "Play"
+
+[node name="BackButton" type="Button" parent="UI"]
+margin_left = 64.0
+margin_top = 320.0
+margin_right = 128.0
+margin_bottom = 344.0
+text = "Back"
+
+[connection signal="pressed" from="UI/Maps/TutorialMapButton" to="." method="_on_TutorialMapButton_pressed"]
+[connection signal="pressed" from="UI/Maps/CityMapButton" to="." method="_on_CityMapButton_pressed"]
+[connection signal="pressed" from="UI/PlayButton" to="." method="_on_PlayButton_pressed"]
+[connection signal="pressed" from="UI/BackButton" to="." method="_on_BackButton_pressed"]
