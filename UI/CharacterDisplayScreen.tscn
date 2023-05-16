@@ -24,7 +24,7 @@ margin_left = 64.0
 margin_top = 24.0
 margin_right = 320.0
 margin_bottom = 64.0
-text = "MetaBoy Info Screen"
+text = "MetaBoy Info"
 valign = 1
 
 [node name="MetaBoy" parent="Control/BackPanel" instance=ExtResource( 1 )]
@@ -194,19 +194,12 @@ margin_right = 106.0
 margin_bottom = 332.0
 text = "Back"
 
-[node name="PlayTopDownButton" type="Button" parent="Control/BackPanel"]
+[node name="MapScreenButton" type="Button" parent="Control/BackPanel"]
 margin_left = 256.0
-margin_top = 312.0
-margin_right = 420.0
+margin_top = 296.0
+margin_right = 608.0
 margin_bottom = 332.0
-text = "Play Top-Down Example"
-
-[node name="PlayPlatformerButton" type="Button" parent="Control/BackPanel"]
-margin_left = 440.0
-margin_top = 312.0
-margin_right = 607.0
-margin_bottom = 332.0
-text = "Play Platformer Example"
+text = "Continue to Map Selection"
 
 [node name="IdleButton" type="Button" parent="Control/BackPanel"]
 margin_left = 64.0
@@ -248,8 +241,7 @@ margin_bottom = 275.0
 text = "Collection: OG"
 
 [connection signal="pressed" from="Control/BackPanel/BackButton" to="." method="_on_BackButton_pressed"]
-[connection signal="pressed" from="Control/BackPanel/PlayTopDownButton" to="." method="_on_PlayTopDownButton_pressed"]
-[connection signal="pressed" from="Control/BackPanel/PlayPlatformerButton" to="." method="_on_PlayPlatformerButton_pressed"]
+[connection signal="pressed" from="Control/BackPanel/MapScreenButton" to="." method="_on_MapScreenButton_pressed"]
 [connection signal="pressed" from="Control/BackPanel/IdleButton" to="." method="_on_IdleButton_pressed"]
 [connection signal="pressed" from="Control/BackPanel/RunButton" to="." method="_on_RunButton_pressed"]
 [connection signal="value_changed" from="Control/BackPanel/SpeedSlider" to="." method="_on_SpeedSlider_value_changed"]

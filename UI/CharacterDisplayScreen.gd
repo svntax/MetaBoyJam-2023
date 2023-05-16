@@ -45,8 +45,5 @@ func _on_SpeedSlider_value_changed(value):
 	if metaboy.animation_player.is_playing():
 		metaboy.animation_player.play(metaboy.animation_player.current_animation, -1, value)
 
-func _on_PlayTopDownButton_pressed():
-	get_tree().change_scene("res://TopDownExample/TopDownScene.tscn")
-
-func _on_PlayPlatformerButton_pressed():
-	get_tree().change_scene("res://PlatformerExample/PlatformerScene.tscn")
+func _on_MapScreenButton_pressed():
+	get_tree().change_scene("res://UI/MapSelectScreen.tscn")
