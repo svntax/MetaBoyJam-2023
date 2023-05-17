@@ -11,7 +11,12 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Bg" type="ColorRect" parent="."]
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2( 1, 1 )
+
+[node name="Bg" type="ColorRect" parent="ParallaxBackground/ParallaxLayer"]
 margin_right = 640.0
 margin_bottom = 360.0
 color = Color( 0.227451, 0.266667, 0.4, 1 )
@@ -39,3 +44,8 @@ __meta__ = {
 [node name="MetaBoyCharacter" parent="Players" instance=ExtResource( 1 )]
 unique_name_in_owner = true
 position = Vector2( 336, 320 )
+
+[node name="Camera2D" type="Camera2D" parent="Players/MetaBoyCharacter"]
+current = true
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
