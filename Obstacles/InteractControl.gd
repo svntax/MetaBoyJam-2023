@@ -64,7 +64,11 @@ func _on_pressed():
 	interact_menu.set_object_reference(parent_obstacle)
 
 func _on_mouse_entered():
-	object_name_label.show()
+	if get_tree().paused:
+		# Hacky fix to prevent name from showing up while game is paused
+		object_name_label.hide()
+	else:
+		object_name_label.show()
 
 func _on_mouse_exited():
 	object_name_label.hide()
