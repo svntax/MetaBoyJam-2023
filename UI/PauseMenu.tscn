@@ -46,6 +46,7 @@ text = "Paused"
 align = 1
 
 [node name="ColorRect" type="ColorRect" parent="MarginContainer/VBoxContainer"]
+self_modulate = Color( 0, 1, 0.576471, 1 )
 margin_top = 20.0
 margin_right = 80.0
 margin_bottom = 21.0
