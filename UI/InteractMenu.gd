@@ -40,8 +40,25 @@ func set_object_traits(traits: Dictionary) -> void:
 	rect_size = Vector2()
 
 func set_object_reference(object: Node2D) -> void:
-	if object.has_method("on_slashed"):
-		pass
+	_connect_interaction(slash_button, object, "on_slashed")
+	_connect_interaction(explode_button, object, "on_exploded")
+	_connect_interaction(smash_button, object, "on_smashed")
+	_connect_interaction(hack_button, object, "on_hacked")
+	_connect_interaction(picklock_button, object, 'on_picklocked')
+	_connect_interaction(burn_button, object, "on_burned")
+
+# Helper method to connect buttons to corresponding callback methods from the
+# target object.
+func _connect_interaction(button, target_object, target_function_name) -> void:
+	if target_object.has_method(target_function_name):
+		if not button.is_connected("pressed", target_object, target_function_name):
+			button.connect("pressed", target_object, target_function_name)
+	# Also connect it to this node to hide after pressing
+	if not button.is_connected("pressed", self, "_on_interaction_pressed"):
+		button.connect("pressed", self, "_on_interaction_pressed")
+
+func _on_interaction_pressed():
+	hide()
 
 func _on_DoneButton_pressed():
 	hide()
