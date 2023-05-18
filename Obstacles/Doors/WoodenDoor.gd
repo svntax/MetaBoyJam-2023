@@ -14,3 +14,20 @@ func _ready():
 
 func get_object_name() -> String:
 	return "Wooden Door"
+
+# Interaction callbacks
+func on_exploded() -> void:
+	print("Exploded")
+	queue_free()
+
+func on_smashed() -> void:
+	print("Smashed")
+	queue_free()
+
+func on_picklocked() -> void:
+	print("Picklocked")
+	queue_free()
+
+func on_burned() -> void:
+	print("Burned")
+	queue_free()
