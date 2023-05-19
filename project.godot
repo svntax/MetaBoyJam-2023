@@ -80,6 +80,13 @@ pause={
  ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="SOLID"
+2d_physics/layer_2="PLAYER"
+2d_physics/layer_3="HOLE"
+2d_physics/layer_4="PROJECTILE"
+
 [mono]
 
 project/assembly_name="MetaBoyGameJam2"
