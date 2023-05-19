@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Obstacles/Crates/WoodenCrate.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Obstacles/Crates/WoodenCrateLocked.gd" type="Script" id=2]
+[ext_resource path="res://Obstacles/Crates/lock.png" type="Texture" id=3]
+
+[node name="WoodenCrateLocked" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+
+[node name="Lock" type="Sprite" parent="." index="1"]
+position = Vector2( 0, 7 )
+texture = ExtResource( 3 )
+
+[node name="InteractControl" parent="." index="3"]
+unlock = true
+
+[node name="ObjectNameLabel" parent="UI" index="1"]
+margin_left = -72.0
+margin_right = 72.0
+text = "Wooden Crate (Locked)"
+
+[editable path="UI/InteractMenu"]
