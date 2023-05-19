@@ -39,7 +39,7 @@ func get_weapon_traits() -> Dictionary:
 	var weapon = metaboy.metaboy_data.weapon
 	if weapon.empty():
 		push_warning("Warning: Could not get the weapon name of the player's MetaBoy.")
-		weapon = "Boxing-Gloves" # Default to Boxing-Gloves because of the Smash trait
+		weapon = "Admin-Tool" # Default to admin tool
 	
 	var weapon_data = Globals.weapon_data.get(weapon)
 	var weapon_traits = weapon_data.get("Traits", [])

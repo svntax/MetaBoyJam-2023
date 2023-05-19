@@ -68,4 +68,7 @@ var weapon_data = {
 	"Red-Boxing-Gloves": {"Attack": Attack.MELEE, "Traits": [Trait.SMASH]},
 	"STX-Blaster": {"Attack": Attack.RANGED, "Traits": [Trait.EXPLOSIVE]},
 	"Surrender-Flag": {"Attack": Attack.MELEE, "Traits": [Trait.SMASH]},
+	
+	# For testing purposes
+	"Admin-Tool": {"Attack": Attack.MELEE, "Traits": [Trait.SLASHING, Trait.EXPLOSIVE, Trait.SMASH, Trait.PIERCING, Trait.HACKING, Trait.UNLOCK, Trait.FIRE]},
 }
