@@ -48,7 +48,9 @@ func set_object_reference(object: Node2D) -> void:
 	_connect_interaction(burn_button, object, "on_burned")
 	
 	# Renames for specific objects
-	if object.get_object_name() == "Iron Door":
+	var object_name = object.get_object_name()
+	var melt_objects = ["Iron Door", "Iron Crate"]
+	if object_name in melt_objects:
 		burn_button.text = "Melt"
 
 # Helper method to connect buttons to corresponding callback methods from the

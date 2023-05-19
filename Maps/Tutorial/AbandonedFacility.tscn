@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://MetaBoy/MetaBoyCharacter.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Maps/Tutorial/AbandonedFacility.gd" type="Script" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://Obstacles/Doors/IronDoor.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Obstacles/Crates/WoodenCrate.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Obstacles/Crates/WoodenCrateLocked.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Obstacles/Crates/IronCrate.tscn" type="PackedScene" id=12]
 
 [node name="AbandonedFacility" type="Node2D"]
 script = ExtResource( 2 )
@@ -71,6 +72,9 @@ position = Vector2( 64, 256 )
 
 [node name="WoodenCrateLocked" parent="Obstacles" instance=ExtResource( 11 )]
 position = Vector2( 144, 80 )
+
+[node name="IronCrate" parent="Obstacles" instance=ExtResource( 12 )]
+position = Vector2( 608, 284 )
 
 [node name="Players" type="Node2D" parent="."]
 __meta__ = {
