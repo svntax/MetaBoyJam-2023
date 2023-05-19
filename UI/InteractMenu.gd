@@ -46,6 +46,10 @@ func set_object_reference(object: Node2D) -> void:
 	_connect_interaction(hack_button, object, "on_hacked")
 	_connect_interaction(picklock_button, object, 'on_picklocked')
 	_connect_interaction(burn_button, object, "on_burned")
+	
+	# Renames for specific objects
+	if object.get_object_name() == "Iron Door":
+		burn_button.text = "Melt"
 
 # Helper method to connect buttons to corresponding callback methods from the
 # target object.
