@@ -81,17 +81,6 @@ func _on_pressed():
 			break
 	
 	var main_weapon_traits = current_player.get_weapon_traits()
-	# TODO: combine with traits of subweapons being held
-	var combined_weapon_traits = main_weapon_traits
-	
-#	interact_menu.set_object_traits({
-#		"Slashing": slashing and (Globals.Trait.SLASHING in combined_weapon_traits),
-#		"Explosive": explosive and (Globals.Trait.EXPLOSIVE in combined_weapon_traits),
-#		"Smash": smash and (Globals.Trait.SMASH in combined_weapon_traits),
-#		"Hacking": hacking and (Globals.Trait.HACKING in combined_weapon_traits),
-#		"Unlock": unlock and (Globals.Trait.UNLOCK in combined_weapon_traits),
-#		"Fire": fire and (Globals.Trait.FIRE in combined_weapon_traits)
-#	})
 	item_pickup_menu.set_object_reference(parent_obstacle)
 
 func _on_mouse_entered():

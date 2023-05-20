@@ -175,6 +175,23 @@ func get_equipped_weapon_data() -> Dictionary:
 	var weapon_data = Globals.weapon_data.get(weapon)
 	return weapon_data
 
+func get_item_traits_in_inventory() -> Array:
+	var combined_traits = []
+	var inventory_menus = get_tree().get_nodes_in_group("InventoryMenu")
+	if inventory_menus.empty():
+		push_warning("WARNING: Inventory menu was null in get_item_traits_in_inventory().")
+	var inventory_menu = inventory_menus[0]
+	if inventory_menu == null:
+		push_warning("WARNING: Inventory menu was null in get_item_traits_in_inventory().")
+	else:
+		for slot in inventory_menu.inventory_slots:
+			var item_data = slot.get_item_data()
+			var item_traits = item_data.get("Traits", [])
+			if not item_traits.empty():
+				combined_traits.append_array(item_traits)
+	
+	return combined_traits
+
 # Returns the list of traits belonging to this MetaBoy's main weapon.
 func get_weapon_traits() -> Array:
 	var weapon = metaboy.metaboy_data.weapon

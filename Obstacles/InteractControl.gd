@@ -50,8 +50,9 @@ func _on_pressed():
 			break
 	
 	var main_weapon_traits = current_player.get_weapon_traits()
+	var item_traits = current_player.get_item_traits_in_inventory()
 	# TODO: combine with traits of subweapons being held
-	var combined_weapon_traits = main_weapon_traits
+	var combined_weapon_traits = main_weapon_traits + item_traits
 	
 	interact_menu.set_object_traits({
 		"Slashing": slashing and (Globals.Trait.SLASHING in combined_weapon_traits),
