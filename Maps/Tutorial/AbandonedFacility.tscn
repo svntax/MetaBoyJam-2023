@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://MetaBoy/MetaBoyCharacter.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Maps/Tutorial/AbandonedFacility.gd" type="Script" id=2]
@@ -16,8 +16,10 @@
 [ext_resource path="res://Obstacles/CrystalSwitch.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Obstacles/Fences/WireFence.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Obstacles/Fences/WireFenceSide.tscn" type="PackedScene" id=16]
+[ext_resource path="res://Weapons/Hammer.tscn" type="PackedScene" id=17]
+[ext_resource path="res://UI/InventoryMenu.tscn" type="PackedScene" id=18]
 
-[node name="AbandonedFacility" type="Node2D"]
+[node name="AbandonedFacility" type="Node2D" groups=["Maps"]]
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_lock_": true
@@ -118,6 +120,17 @@ drag_margin_right = 0.12
 drag_margin_bottom = 0.12
 editor_draw_drag_margin = true
 
+[node name="Items" type="Node2D" parent="."]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Hammer" parent="Items" instance=ExtResource( 17 )]
+position = Vector2( 480, 288 )
+
+[node name="Hammer2" parent="Items" instance=ExtResource( 17 )]
+position = Vector2( 512, 104 )
+
 [node name="UI" type="CanvasLayer" parent="."]
 layer = 20
 
@@ -130,3 +143,9 @@ margin_left = -56.0
 margin_top = -54.5
 margin_right = 56.0
 margin_bottom = 54.5
+
+[node name="InventoryMenu" parent="UI" instance=ExtResource( 18 )]
+margin_left = 584.0
+margin_top = 16.0
+margin_right = 624.0
+margin_bottom = 200.0

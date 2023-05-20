@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://UI/InventoryMenu.gd" type="Script" id=1]
+[ext_resource path="res://UI/MainUITheme.tres" type="Theme" id=2]
+[ext_resource path="res://UI/InventorySlot.tscn" type="PackedScene" id=3]
+
+[node name="InventoryMenu" type="VBoxContainer" groups=["InventoryMenu"]]
+margin_right = 40.0
+margin_bottom = 184.0
+theme = ExtResource( 2 )
+custom_constants/separation = 8
+script = ExtResource( 1 )
+
+[node name="InventorySlot" parent="." instance=ExtResource( 3 )]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="InventorySlot2" parent="." instance=ExtResource( 3 )]
+margin_top = 48.0
+margin_right = 40.0
+margin_bottom = 88.0
+
+[node name="InventorySlot3" parent="." instance=ExtResource( 3 )]
+margin_top = 96.0
+margin_right = 40.0
+margin_bottom = 136.0
+
+[node name="InventorySlot4" parent="." instance=ExtResource( 3 )]
+margin_top = 144.0
+margin_right = 40.0
+margin_bottom = 184.0
