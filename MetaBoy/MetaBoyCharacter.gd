@@ -20,6 +20,21 @@ onready var in_control = true
 func _ready():
 	metaboy.part_background.hide()
 	melee_damage_area.source_shooter = self
+	
+	_connect_weapon_attack_signals()
+
+func _connect_weapon_attack_signals():
+	_connect_attack_signal("left_pistol_shoot", "_on_attack_animation_signal")
+	_connect_attack_signal("right_pistol_shoot", "_on_attack_animation_signal")
+	_connect_attack_signal("double_pistol_shoot", "_on_attack_animation_signal")
+
+func _connect_attack_signal(signal_name: String, callback) -> void:
+	if not metaboy.is_connected(signal_name, self, callback):
+		metaboy.connect(signal_name, self, callback)
+
+# Note: Assumes that any attack signal that emits comes from the metaboy's main weapon.
+func _on_attack_animation_signal() -> void:
+	shoot_projectile(metaboy.metaboy_data.weapon)
 
 func is_being_controlled() -> bool:
 	return in_control
@@ -90,7 +105,10 @@ func attack() -> void:
 			melee_damage_area.damage_type = -1
 		attack_animation_player.play("slash")
 	elif attack_type == Globals.Attack.RANGED:
-		shoot_projectile(metaboy.metaboy_data.weapon)
+		var will_play_animation = metaboy.play_attack_animation(metaboy.metaboy_data.weapon)
+		if not will_play_animation:
+			# No animation will play, so attack instantly
+			shoot_projectile(metaboy.metaboy_data.weapon)
 
 # TODO: implement all ranged weapons
 func shoot_projectile(weapon: String) -> void:
@@ -109,6 +127,33 @@ func shoot_projectile(weapon: String) -> void:
 		projectile.global_position = metaboy.stx_blaster_spawn_pos.global_position
 		projectile.z_index = z_index + 1
 		var vel = Vector2(360, 0).rotated(ranged_root.rotation)
+		projectile.set_velocity(vel)
+		projectile.set_direction(vel)
+	elif weapon == "Cowboy-Left-Pistol":
+		var projectile = WoodenStaffProjectile.instance()
+		get_parent().add_child(projectile)
+		projectile.source_shooter = self
+		projectile.global_position = metaboy.left_pistol_spawn.global_position
+		projectile.z_index = z_index + 1
+		var vel = Vector2(440, 0).rotated(ranged_root.rotation)
+		projectile.set_velocity(vel)
+		projectile.set_direction(vel)
+	elif weapon == "Cowboy-Right-Pistol":
+		var projectile = WoodenStaffProjectile.instance()
+		get_parent().add_child(projectile)
+		projectile.source_shooter = self
+		projectile.global_position = metaboy.right_pistol_spawn.global_position
+		projectile.z_index = z_index + 1
+		var vel = Vector2(440, 0).rotated(ranged_root.rotation)
+		projectile.set_velocity(vel)
+		projectile.set_direction(vel)
+	elif weapon == "Cowboy-Both-Pistols":
+		var projectile = WoodenStaffProjectile.instance()
+		get_parent().add_child(projectile)
+		projectile.source_shooter = self
+		projectile.global_position = metaboy.left_pistol_spawn.global_position
+		projectile.z_index = z_index + 1
+		var vel = Vector2(440, 0).rotated(ranged_root.rotation)
 		projectile.set_velocity(vel)
 		projectile.set_direction(vel)
 

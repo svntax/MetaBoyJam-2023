@@ -1,9 +1,8 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://MetaBoy/MetaBoy.tscn" type="PackedScene" id=1]
 [ext_resource path="res://MetaBoy/MetaBoyCharacter.gd" type="Script" id=2]
 [ext_resource path="res://Weapons/DamageArea.tscn" type="PackedScene" id=3]
-[ext_resource path="res://MetaBoy/spritesheets_stx/Weapon/STX-Blaster_Base.png" type="Texture" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 15, 22 )
@@ -75,9 +74,6 @@ script = ExtResource( 2 )
 
 [node name="Background" parent="MetaBoy/MainBody" index="0"]
 visible = false
-
-[node name="Weapon" parent="MetaBoy/MainBody" index="8"]
-texture = ExtResource( 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 2 )

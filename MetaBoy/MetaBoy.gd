@@ -7,8 +7,14 @@ onready var metaboy_data = MetaBoyData.new({
 	"Collection": MetaBoyGlobals.Collection.OG
 })
 
+# Signals to emit at specific frames for the weapon animations
+signal left_pistol_shoot()
+signal right_pistol_shoot()
+signal double_pistol_shoot()
+
 onready var animation_player = $AnimationPlayer
 onready var body_root = $MainBody
+onready var attack_animation_player = $AttackAnimationPlayer
 
 # MetaBoy parts
 onready var part_background = $MainBody/Background
@@ -21,8 +27,12 @@ onready var part_neck = $MainBody/Neck
 onready var part_waist = $MainBody/Waist
 onready var part_weapon = $MainBody/Weapon
 
+onready var part_weapon_attack = $"%WeaponAttack"
+
 # Projectile spawn positions
 onready var stx_blaster_spawn_pos = $"%STXBlasterProjectileSpawn"
+onready var left_pistol_spawn = $"%LeftPistolSpawn"
+onready var right_pistol_spawn = $"%RightPistolSpawn"
 
 func _ready():
 	update_attributes()
@@ -132,3 +142,40 @@ func get_attribute_from_sprite(sprite: Sprite) -> String:
 	var path_split = path.split("/")
 	var attribute = path_split[path_split.size() - 1].replace(".png", "").replace("-White", "")
 	return attribute
+
+# Returns whether an animation will play for the given weapon
+func play_attack_animation(weapon: String) -> bool:
+	var will_play_animation = true
+	if weapon == "Cowboy-Both-Pistols":
+		part_weapon_attack.texture = load("res://Weapons/animations/DoublePistols.png")
+		attack_animation_player.play("double_pistol_shoot", -1, 4)
+	elif weapon == "Cowboy-Left-Pistol":
+		part_weapon_attack.texture = load("res://Weapons/animations/LeftPistols.png")
+		attack_animation_player.play("left_pistol_shoot", -1, 4)
+	elif weapon == "Cowboy-Right-Pistol":
+		part_weapon_attack.texture = load("res://Weapons/animations/RightPistols.png")
+		attack_animation_player.play("right_pistol_shoot", -1, 4)
+	else:
+		# TODO: animations for other weapons
+		will_play_animation = false
+	return will_play_animation
+
+# Weapon attack signals
+func emit_left_pistol_shoot() -> void:
+	emit_signal("left_pistol_shoot")
+
+func emit_right_pistol_shoot() -> void:
+	emit_signal("right_pistol_shoot")
+
+func emit_double_pistol_shoot() -> void:
+	emit_signal("double_pistol_shoot")
+
+func _on_AttackAnimationPlayer_animation_started(anim_name):
+	if anim_name != "RESET":
+		part_weapon.hide()
+		part_weapon_attack.show()
+
+func _on_AttackAnimationPlayer_animation_finished(anim_name):
+	if anim_name != "RESET":
+		part_weapon.show()
+		part_weapon_attack.hide()
