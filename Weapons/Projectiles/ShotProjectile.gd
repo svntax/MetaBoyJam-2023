@@ -53,6 +53,9 @@ func _handle_object_entered(other) -> void:
 	if not alive:
 		return
 	
+	if other.is_in_group("PickupItems"):
+		return
+	
 	# Damage method is not called here because DamageArea handles it
 	
 	if should_remove_on_collision(other):

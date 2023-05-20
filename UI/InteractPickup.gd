@@ -26,6 +26,7 @@ onready var in_inventory = false
 
 func _ready():
 	parent_obstacle.add_to_group("Interactable")
+	parent_obstacle.add_to_group("PickupItems")
 	self.connect("pressed", self, "_on_pressed")
 	self.connect("mouse_entered", self, "_on_mouse_entered")
 	self.connect("mouse_exited", self, "_on_mouse_exited")
