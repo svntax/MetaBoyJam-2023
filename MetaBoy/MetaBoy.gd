@@ -148,13 +148,13 @@ func play_attack_animation(weapon: String) -> bool:
 	var will_play_animation = true
 	if weapon == "Cowboy-Both-Pistols":
 		part_weapon_attack.texture = load("res://Weapons/animations/DoublePistols.png")
-		attack_animation_player.play("double_pistol_shoot", -1, 4)
+		attack_animation_player.play("double_pistol_shoot", -1, 3)
 	elif weapon == "Cowboy-Left-Pistol":
 		part_weapon_attack.texture = load("res://Weapons/animations/LeftPistols.png")
-		attack_animation_player.play("left_pistol_shoot", -1, 4)
+		attack_animation_player.play("left_pistol_shoot", -1, 3)
 	elif weapon == "Cowboy-Right-Pistol":
 		part_weapon_attack.texture = load("res://Weapons/animations/RightPistols.png")
-		attack_animation_player.play("right_pistol_shoot", -1, 4)
+		attack_animation_player.play("right_pistol_shoot", -1, 3)
 	else:
 		# TODO: animations for other weapons
 		will_play_animation = false
