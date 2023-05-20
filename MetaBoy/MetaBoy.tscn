@@ -1,8 +1,7 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://MetaBoy/spritesheets_og/Body/Schoolboy.png" type="Texture" id=1]
 [ext_resource path="res://MetaBoy/spritesheets_og/Background/Alien-Planet.png" type="Texture" id=2]
-[ext_resource path="res://Weapons/animations/RightPistols.png" type="Texture" id=3]
 [ext_resource path="res://MetaBoy/Layers.gd" type="Script" id=4]
 [ext_resource path="res://MetaBoy/MetaBoy.gd" type="Script" id=5]
 
@@ -245,7 +244,6 @@ position = Vector2( 32, 0 )
 [node name="WeaponAttack" type="Sprite" parent="MainBody/WeaponAttackRoot"]
 unique_name_in_owner = true
 visible = false
-texture = ExtResource( 3 )
 hframes = 5
 vframes = 5
 

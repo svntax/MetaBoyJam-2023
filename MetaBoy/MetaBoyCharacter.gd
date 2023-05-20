@@ -13,6 +13,10 @@ onready var ranged_root = $RangedRoot
 # Projectiles
 const WoodenStaffProjectile = preload("res://Weapons/Projectiles/WoodenStaffProjectile.tscn")
 const STXBlasterProjectile = preload("res://Weapons/Projectiles/STXBlasterProjectile.tscn")
+const BulletProjectile = preload("res://Weapons/Projectiles/BulletProjectile.tscn")
+
+onready var bullet_speed = 880
+onready var magic_bullet_speed = 360
 
 # If we want to be able to control different characters
 onready var in_control = true
@@ -112,50 +116,48 @@ func attack() -> void:
 
 # TODO: implement all ranged weapons
 func shoot_projectile(weapon: String) -> void:
+	var projectile
 	if weapon == "Wooden-Staff":
-		var projectile = WoodenStaffProjectile.instance()
+		projectile = WoodenStaffProjectile.instance()
 		get_parent().add_child(projectile)
 		projectile.source_shooter = self
 		projectile.global_position = self.global_position
-		projectile.z_index = z_index + 1
-		var vel = Vector2(360, 0).rotated(ranged_root.rotation)
+		var vel = Vector2(magic_bullet_speed, 0).rotated(ranged_root.rotation)
 		projectile.set_velocity(vel)
 	elif weapon == "STX-Blaster":
-		var projectile = STXBlasterProjectile.instance()
+		projectile = STXBlasterProjectile.instance()
 		get_parent().add_child(projectile)
 		projectile.source_shooter = self
 		projectile.global_position = metaboy.stx_blaster_spawn_pos.global_position
-		projectile.z_index = z_index + 1
-		var vel = Vector2(360, 0).rotated(ranged_root.rotation)
+		var vel = Vector2(magic_bullet_speed, 0).rotated(ranged_root.rotation)
 		projectile.set_velocity(vel)
 		projectile.set_direction(vel)
 	elif weapon == "Cowboy-Left-Pistol":
-		var projectile = WoodenStaffProjectile.instance()
+		projectile = BulletProjectile.instance()
 		get_parent().add_child(projectile)
 		projectile.source_shooter = self
 		projectile.global_position = metaboy.left_pistol_spawn.global_position
-		projectile.z_index = z_index + 1
-		var vel = Vector2(440, 0).rotated(ranged_root.rotation)
+		var vel = Vector2(bullet_speed, 0).rotated(ranged_root.rotation)
 		projectile.set_velocity(vel)
 		projectile.set_direction(vel)
 	elif weapon == "Cowboy-Right-Pistol":
-		var projectile = WoodenStaffProjectile.instance()
+		projectile = BulletProjectile.instance()
 		get_parent().add_child(projectile)
 		projectile.source_shooter = self
 		projectile.global_position = metaboy.right_pistol_spawn.global_position
-		projectile.z_index = z_index + 1
-		var vel = Vector2(440, 0).rotated(ranged_root.rotation)
+		var vel = Vector2(bullet_speed, 0).rotated(ranged_root.rotation)
 		projectile.set_velocity(vel)
 		projectile.set_direction(vel)
-	elif weapon == "Cowboy-Both-Pistols":
-		var projectile = WoodenStaffProjectile.instance()
+	elif weapon == "Cowboy-Both-Pistols" or weapon == "Cowboy-Two-Pistols":
+		projectile = BulletProjectile.instance()
 		get_parent().add_child(projectile)
 		projectile.source_shooter = self
-		projectile.global_position = metaboy.left_pistol_spawn.global_position
-		projectile.z_index = z_index + 1
-		var vel = Vector2(440, 0).rotated(ranged_root.rotation)
+		projectile.global_position = metaboy.right_pistol_spawn.global_position
+		var vel = Vector2(bullet_speed, 0).rotated(ranged_root.rotation)
 		projectile.set_velocity(vel)
 		projectile.set_direction(vel)
+	
+	projectile.z_index = z_index + 1
 
 func can_attack() -> bool:
 	return attack_cooldown_timer.is_stopped() and in_control
