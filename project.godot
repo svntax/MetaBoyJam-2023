@@ -13,9 +13,15 @@ _global_script_classes=[ {
 "class": "MetaBoyData",
 "language": "GDScript",
 "path": "res://MetaBoy/MetaBoyData.gd"
+}, {
+"base": "Node2D",
+"class": "ShotProjectile",
+"language": "GDScript",
+"path": "res://Weapons/Projectiles/ShotProjectile.gd"
 } ]
 _global_script_class_icons={
-"MetaBoyData": ""
+"MetaBoyData": "",
+"ShotProjectile": ""
 }
 
 [application]
@@ -92,6 +98,7 @@ attack={
 2d_physics/layer_3="HOLE"
 2d_physics/layer_4="PROJECTILE"
 2d_physics/layer_5="ENEMIES"
+2d_physics/layer_6="FENCES"
 
 [mono]
 

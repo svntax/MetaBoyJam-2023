@@ -21,6 +21,9 @@ onready var part_neck = $MainBody/Neck
 onready var part_waist = $MainBody/Waist
 onready var part_weapon = $MainBody/Weapon
 
+# Projectile spawn positions
+onready var stx_blaster_spawn_pos = $"%STXBlasterProjectileSpawn"
+
 func _ready():
 	update_attributes()
 
@@ -92,7 +95,8 @@ func set_metaboy_attributes(attributes: Dictionary) -> void:
 				metaboy_data.waist = value
 				show_waist = true
 			elif key == "Weapon":
-				part_weapon.texture = load(path)
+				var actual_path = get_weapon_path(value, path)
+				part_weapon.texture = load(actual_path)
 				metaboy_data.weapon = value
 	
 	part_back.visible = show_back
@@ -107,6 +111,14 @@ func set_metaboy_attributes(attributes: Dictionary) -> void:
 		var face_light_version_texture = MetaBoyGlobals.get_face_light_version(face_type, collection)
 		if face_light_version_texture:
 			part_face.texture = face_light_version_texture
+
+# Replaces the weapon spritesheet with a base version if applicable.
+func get_weapon_path(weapon_type, path) -> String:
+	var modified_path = path
+	if weapon_type == "STX-Blaster":
+		modified_path = path.replace("STX-Blaster.png", "STX-Blaster_Base.png")
+	
+	return modified_path
 
 # Get the attribute from the given sprite's texture path.
 func get_attribute_from_sprite(sprite: Sprite) -> String:

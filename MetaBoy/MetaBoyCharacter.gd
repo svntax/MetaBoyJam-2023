@@ -8,12 +8,18 @@ onready var attack_animation_player = $AttackAnimationPlayer
 onready var attack_cooldown_timer = $AttackCooldownTimer
 onready var melee_damage_area = $MeleeRoot/SlashDamageArea
 onready var melee_root = $MeleeRoot
+onready var ranged_root = $RangedRoot
+
+# Projectiles
+const WoodenStaffProjectile = preload("res://Weapons/Projectiles/WoodenStaffProjectile.tscn")
+const STXBlasterProjectile = preload("res://Weapons/Projectiles/STXBlasterProjectile.tscn")
 
 # If we want to be able to control different characters
 onready var in_control = true
 
 func _ready():
 	metaboy.part_background.hide()
+	melee_damage_area.source_shooter = self
 
 func is_being_controlled() -> bool:
 	return in_control
@@ -53,8 +59,7 @@ func handle_movement(_delta: float) -> void:
 		move_and_slide(velocity)
 		
 		# Aiming
-		if can_aim():
-			melee_root.rotation = global_position.direction_to(get_global_mouse_position()).angle()
+		ranged_root.rotation = global_position.direction_to(get_global_mouse_position()).angle()
 	else:
 		velocity.x = 0
 		velocity.y = 0
@@ -69,6 +74,8 @@ func attack() -> void:
 	var attack_type = get_weapon_attack_type()
 	
 	if attack_type == Globals.Attack.MELEE:
+		melee_root.rotation = ranged_root.rotation
+		
 		# Set the correct attack type for the melee damage areas
 		if Globals.Trait.SLASHING in weapon_traits:
 			melee_damage_area.damage_type = Globals.Trait.SLASHING
@@ -83,7 +90,27 @@ func attack() -> void:
 			melee_damage_area.damage_type = -1
 		attack_animation_player.play("slash")
 	elif attack_type == Globals.Attack.RANGED:
-		attack_animation_player.play("slash") # TODO: ranged attack
+		shoot_projectile(metaboy.metaboy_data.weapon)
+
+# TODO: implement all ranged weapons
+func shoot_projectile(weapon: String) -> void:
+	if weapon == "Wooden-Staff":
+		var projectile = WoodenStaffProjectile.instance()
+		get_parent().add_child(projectile)
+		projectile.source_shooter = self
+		projectile.global_position = self.global_position
+		projectile.z_index = z_index + 1
+		var vel = Vector2(360, 0).rotated(ranged_root.rotation)
+		projectile.set_velocity(vel)
+	elif weapon == "STX-Blaster":
+		var projectile = STXBlasterProjectile.instance()
+		get_parent().add_child(projectile)
+		projectile.source_shooter = self
+		projectile.global_position = metaboy.stx_blaster_spawn_pos.global_position
+		projectile.z_index = z_index + 1
+		var vel = Vector2(360, 0).rotated(ranged_root.rotation)
+		projectile.set_velocity(vel)
+		projectile.set_direction(vel)
 
 func can_attack() -> bool:
 	return attack_cooldown_timer.is_stopped() and in_control

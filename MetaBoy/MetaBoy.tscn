@@ -106,6 +106,10 @@ hframes = 5
 vframes = 3
 frame = 5
 
+[node name="STXBlasterProjectileSpawn" type="Position2D" parent="MainBody/Weapon"]
+unique_name_in_owner = true
+position = Vector2( 32, 0 )
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/RESET = SubResource( 8 )
 anims/idle = SubResource( 5 )

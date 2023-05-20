@@ -11,7 +11,7 @@
 extents = Vector2( 2, 32 )
 
 [node name="WireFenceSide" type="StaticBody2D"]
-collision_layer = 4
+collision_layer = 32
 collision_mask = 3
 script = ExtResource( 1 )
 

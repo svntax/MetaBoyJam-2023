@@ -18,7 +18,7 @@ func add_object_connection(object: Node2D) -> void:
 	if object.has_method("on_deactivated"):
 		self.connect("deactivated", object, "on_deactivated")
 
-func damage() -> void:
+func damage(_damage_data: Dictionary) -> void:
 	if active:
 		deactivate()
 	else:
