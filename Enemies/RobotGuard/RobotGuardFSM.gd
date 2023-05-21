@@ -32,6 +32,7 @@ func _enter_state(new_state, old_state):
 		States.MOVE:
 			actor.update_path_to_target()
 			actor.find_target_timer.start()
+			actor.attack_timer.start()
 		States.DEAD:
 			actor.die()
 
@@ -39,3 +40,4 @@ func _exit_state(old_state, new_state):
 	match old_state:
 		States.MOVE:
 			actor.find_target_timer.stop()
+			actor.attack_timer.stop()

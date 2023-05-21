@@ -12,6 +12,10 @@ onready var damage_immunity_timer = $DamageImmunityTimer
 onready var hp_bar = $"%HpBar"
 onready var alert_duration_timer = $AlertDurationTimer
 onready var find_target_timer = $FindTargetTimer
+onready var melee_root = $MeleeRoot
+onready var melee_damage_area = $MeleeRoot/SlashDamageArea
+onready var attack_timer = $AttackTimer
+onready var attack_animation_player = $AttackAnimationPlayer
 
 onready var navigation_agent = $NavigationAgent2D
 
@@ -20,6 +24,7 @@ onready var target = player
 onready var target_pos = Vector2()
 onready var speed = 96
 onready var hp = 20
+onready var melee_damage = 5
 onready var velocity = Vector2()
 onready var chase_radius = 360
 
@@ -32,6 +37,9 @@ func _ready():
 	hp_bar.max_value = hp
 	set_hp(hp)
 	detect_area.add_to_group("DetectAreas")
+	
+	melee_damage_area.source_shooter = self
+	melee_damage_area.set_damage_amount(melee_damage)
 
 func _on_PlayerDetectArea_body_entered(body):
 	if body == player:
@@ -128,3 +136,11 @@ func update_path_to_target():
 
 func _on_NavigationAgent2D_path_changed():
 	emit_signal("path_changed", navigation_agent.get_nav_path())
+
+func _on_AttackTimer_timeout():
+	attack_timer.start()
+	if player != null:
+		melee_root.rotation = global_position.direction_to(player.global_position).angle()
+		var dist_sq = global_position.distance_squared_to(player.global_position)
+		if dist_sq <= 80 * 80:
+			attack_animation_player.play("slash")

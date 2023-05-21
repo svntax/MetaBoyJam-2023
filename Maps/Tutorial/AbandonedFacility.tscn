@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://MetaBoy/MetaBoyCharacter.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Maps/Tutorial/AbandonedFacility.gd" type="Script" id=2]
@@ -20,6 +20,7 @@
 [ext_resource path="res://UI/InventoryMenu.tscn" type="PackedScene" id=18]
 [ext_resource path="res://Weapons/Knife.tscn" type="PackedScene" id=19]
 [ext_resource path="res://Weapons/Lighter.tscn" type="PackedScene" id=20]
+[ext_resource path="res://UI/GameOverMenu.tscn" type="PackedScene" id=21]
 
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( 560, 160, 560, 304, 536, 280, 536, 104, 360, 304, 192, 280, 576, 112, 576, 144, 544, 88, 336, 88, 192, 104, 504, -200, 560, -200, 552, -112, 504, -144, 336, -112, 264, -144, 360, 376, 280, 376, 280, 304, 88, 304, 88, 88, 312, 88, 312, -112, 208, -120, 208, -176, 264, -176 )
@@ -159,6 +160,17 @@ margin_left = 584.0
 margin_top = 16.0
 margin_right = 624.0
 margin_bottom = 200.0
+
+[node name="GameOverMenu" parent="UI" instance=ExtResource( 21 )]
+unique_name_in_owner = true
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -82.0
+margin_top = -67.0
+margin_right = 82.0
+margin_bottom = 67.0
 
 [node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="."]
 navpoly = SubResource( 1 )

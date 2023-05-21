@@ -6,7 +6,7 @@ var source_shooter = null
 
 onready var damage_data = {
 	"source_object": self,
-	"damage_amount": 1
+	"damage_amount": 5
 }
 
 # Called when the node enters the scene tree for the first time.
@@ -18,6 +18,9 @@ func set_damage_data(data: Dictionary) -> void:
 		"source_object": data.get("source_object", self),
 		"damage_amount": data.get("damage_amount", 1)
 	}
+
+func set_damage_amount(amount: int) -> void:
+	damage_data["damage_amount"] = amount
 
 func set_damage_type(type: String) -> void:
 	damage_type = type

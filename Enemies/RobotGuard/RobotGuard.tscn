@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Enemies/RobotGuard/robot_guard.png" type="Texture" id=1]
 [ext_resource path="res://Enemies/RobotGuard/RobotGuard.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://UI/MainUITheme.tres" type="Theme" id=4]
 [ext_resource path="res://UI/HpBarForeground.tres" type="StyleBox" id=5]
 [ext_resource path="res://Enemies/RobotGuard/HpBarBackground.tres" type="StyleBox" id=6]
+[ext_resource path="res://Weapons/DamageArea.tscn" type="PackedScene" id=7]
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 96, 128 )
@@ -72,6 +73,64 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="RectangleShape2D" id=8]
+extents = Vector2( 14, 24 )
+
+[sub_resource type="Animation" id=9]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("MeleeRoot/SlashShape:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("MeleeRoot/SlashDamageArea/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=10]
+resource_name = "slash"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("MeleeRoot/SlashShape:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("MeleeRoot/SlashDamageArea/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
 }
 
 [node name="RobotGuard" type="KinematicBody2D"]
@@ -150,8 +209,34 @@ anims/damage = SubResource( 6 )
 [node name="FindTargetTimer" type="Timer" parent="."]
 one_shot = true
 
+[node name="MeleeRoot" type="Position2D" parent="."]
+
+[node name="SlashDamageArea" parent="MeleeRoot" instance=ExtResource( 7 )]
+position = Vector2( 48, 0 )
+collision_layer = 8
+collision_mask = 31
+damage_type = "Smash"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MeleeRoot/SlashDamageArea"]
+position = Vector2( -18, 0 )
+shape = SubResource( 8 )
+disabled = true
+
+[node name="SlashShape" type="Polygon2D" parent="MeleeRoot"]
+visible = false
+position = Vector2( 24, -22 )
+polygon = PoolVector2Array( -5, -2, 11, 5, 17, 11, 19, 22, 17, 33, 5, 42, -5, 46, 4, 38, 9, 30, 11, 22, 6, 9 )
+
+[node name="AttackTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="AttackAnimationPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 9 )
+anims/slash = SubResource( 10 )
+
 [connection signal="area_entered" from="Body/DetectArea" to="." method="_on_DetectArea_area_entered"]
 [connection signal="body_entered" from="Body/DetectArea" to="." method="_on_DetectArea_body_entered"]
 [connection signal="timeout" from="AlertDurationTimer" to="." method="_on_AlertDurationTimer_timeout"]
 [connection signal="path_changed" from="NavigationAgent2D" to="." method="_on_NavigationAgent2D_path_changed"]
 [connection signal="timeout" from="FindTargetTimer" to="." method="_on_FindTargetTimer_timeout"]
+[connection signal="timeout" from="AttackTimer" to="." method="_on_AttackTimer_timeout"]

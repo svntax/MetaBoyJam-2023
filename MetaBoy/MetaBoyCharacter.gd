@@ -1,10 +1,13 @@
 extends KinematicBody2D
 
+signal died()
+
 onready var speed = 160
 onready var velocity = Vector2()
 
 onready var metaboy = $MetaBoy
 onready var attack_animation_player = $AttackAnimationPlayer
+onready var effect_player = $EffectPlayer
 onready var attack_cooldown_timer = $AttackCooldownTimer
 onready var melee_damage_area = $MeleeRoot/SlashDamageArea
 onready var melee_root = $MeleeRoot
@@ -65,14 +68,20 @@ func damage(damage_data: Dictionary) -> void:
 		damage_immunity_timer.start()
 		var damage_amount = damage_data.get("damage_amount", 1)
 		set_hp(hp - damage_amount)
+		effect_player.play("hurt")
+		
 		if hp <= 0:
 			hp = 0
-			print("Player died")
-			# TODO: player state machine
-			pass#state_machine.set_state(state_machine.States.DEAD)
+			emit_signal("died")
+			die()
 		else:
 			print("Player hurt")
 			pass#state_machine.set_state(state_machine.States.HURT)
+
+func die() -> void:
+	metaboy.hide()
+	melee_damage_area.collision_layer = 0
+	melee_damage_area.collision_mask = 0
 
 func set_attributes(attributes: Dictionary) -> void:
 	metaboy.set_metaboy_attributes(attributes)
@@ -98,7 +107,7 @@ func _unhandled_input(event):
 			attack()
 
 func can_move() -> bool:
-	return in_control
+	return in_control and is_alive()
 
 func handle_movement(_delta: float) -> void:
 	if can_move():
@@ -205,10 +214,10 @@ func shoot_projectile(weapon: String) -> void:
 		projectile.z_index = z_index + 1
 
 func can_attack() -> bool:
-	return attack_cooldown_timer.is_stopped() and in_control
+	return attack_cooldown_timer.is_stopped() and in_control and is_alive()
 
 func can_aim() -> bool:
-	return attack_cooldown_timer.is_stopped() and in_control
+	return attack_cooldown_timer.is_stopped() and in_control and is_alive()
 
 # TODO: currently this returns the main weapon only
 func get_equipped_weapon_data() -> Dictionary:
