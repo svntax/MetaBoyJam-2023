@@ -1,4 +1,5 @@
 extends Node
+class_name Global
 
 const API_ENV_PATH = "res://Configs/env.cfg"
 var loopring_api_key = ""
@@ -19,11 +20,13 @@ func _ready():
 const Hammer = preload("res://Weapons/Hammer.tscn")
 const Knife = preload("res://Weapons/Knife.tscn")
 const Lighter = preload("res://Weapons/Lighter.tscn")
-enum Item {HAMMER, KNIFE, LIGHTER}
+const Lockpick = preload("res://Weapons/Lockpick.tscn")
+enum Item {HAMMER, KNIFE, LIGHTER, LOCKPICK}
 const ITEM_SCENES = {
 	Item.HAMMER: Hammer,
 	Item.KNIFE: Knife,
-	Item.LIGHTER: Lighter
+	Item.LIGHTER: Lighter,
+	Item.LOCKPICK: Lockpick
 }
 
 func get_item_scene(key: int):
