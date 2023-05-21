@@ -1,6 +1,6 @@
 extends Area2D
 
-export (Globals.Trait) var damage_type = Globals.Trait.SLASHING
+export (String) var damage_type = "" setget set_damage_type, get_damage_type
 
 var source_shooter = null
 
@@ -19,8 +19,31 @@ func set_damage_data(data: Dictionary) -> void:
 		"damage_amount": data.get("damage_amount", 1)
 	}
 
-func set_damage_type(type: int) -> void:
+func set_damage_type(type: String) -> void:
 	damage_type = type
+#	if type == Globals.Trait.SLASHING:
+#		damage_type = "Slashing"
+#	elif type == Globals.Trait.EXPLOSIVE:
+#		damage_type = "Explosive"
+#	elif type == Globals.Trait.SMASH:
+#		damage_type = "Smash"
+#	elif type == Globals.Trait.FIRE:
+#		damage_type = "Fire"
+#	else:
+#		damage_type = "Slashing"
+
+func get_damage_type() -> String:
+	return damage_type
+#	if damage_type == "Slashing":
+#		return Globals.Trait.SLASHING
+#	elif damage_type == "Explosive":
+#		return Globals.Trait.EXPLOSIVE
+#	elif damage_type == "Smash":
+#		return Globals.Trait.SMASH
+#	elif damage_type == "Fire":
+#		return Globals.Trait.FIRE
+#
+#	return Globals.Trait.SLASHING
 
 func _on_body_entered(other):
 	if source_shooter != null and other == source_shooter:
@@ -31,11 +54,11 @@ func _on_body_entered(other):
 		other.call_deferred("damage", damage_data)
 	
 	# Trait-specific trigger/activation
-	if other.has_method("on_slashed") and damage_type == Globals.Trait.SLASHING:
+	if other.has_method("on_slashed") and damage_type == "Slashing":
 		other.call_deferred("on_slashed")
-	if other.has_method("on_exploded") and damage_type == Globals.Trait.EXPLOSIVE:
+	if other.has_method("on_exploded") and damage_type == "Explosive":
 		other.call_deferred("on_exploded")
-	if other.has_method("on_smashed") and damage_type == Globals.Trait.SMASH:
+	if other.has_method("on_smashed") and damage_type == "Smash":
 		other.call_deferred("on_smashed")
-	if other.has_method("on_burned") and damage_type == Globals.Trait.FIRE:
+	if other.has_method("on_burned") and damage_type == "Fire":
 		other.call_deferred("on_burned")

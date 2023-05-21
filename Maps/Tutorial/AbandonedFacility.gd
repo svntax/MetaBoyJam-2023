@@ -8,6 +8,11 @@ onready var enemies_root = $Enemies
 
 func _ready():
 	metaboy_main.set_attributes(MetaBoyGlobals.selected_metaboy.get_attributes_as_dictionary())
+	
+	# TEST
+#	metaboy_main.set_attributes({
+#		"Weapon": "Bomb"
+#	})
 
 func get_player() -> Node2D:
 	return metaboy_main

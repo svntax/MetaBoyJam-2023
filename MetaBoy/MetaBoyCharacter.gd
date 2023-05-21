@@ -124,13 +124,13 @@ func attack() -> void:
 		
 		# Set the correct attack type for the melee damage areas
 		if Globals.Trait.SLASHING in weapon_traits:
-			melee_damage_area.damage_type = Globals.Trait.SLASHING
+			melee_damage_area.damage_type = "Slashing"
 		elif Globals.Trait.EXPLOSIVE in weapon_traits:
-			melee_damage_area.damage_type = Globals.Trait.EXPLOSIVE
+			melee_damage_area.damage_type = "Explosive"
 		elif Globals.Trait.SMASH in weapon_traits:
-			melee_damage_area.damage_type = Globals.Trait.SMASH
+			melee_damage_area.damage_type = "Smash"
 		elif Globals.Trait.FIRE in weapon_traits:
-			melee_damage_area.damage_type = Globals.Trait.FIRE
+			melee_damage_area.damage_type = "Fire"
 		else:
 			# All other traits will not have a special interaction, so set the type to -1
 			melee_damage_area.damage_type = -1
