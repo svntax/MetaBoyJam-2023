@@ -15,6 +15,10 @@ onready var ranged_root = $RangedRoot
 onready var hp_bar = $HpBar
 onready var damage_immunity_timer = $DamageImmunityTimer
 
+onready var gunshot_sound = $GunshotSound
+onready var stx_blaster_shoot_sound = $STXBlasterShootSound
+onready var magic_shoot_sound = $MagicShootSound
+
 # Projectiles
 const WoodenStaffProjectile = preload("res://Weapons/Projectiles/WoodenStaffProjectile.tscn")
 const STXBlasterProjectile = preload("res://Weapons/Projectiles/STXBlasterProjectile.tscn")
@@ -158,21 +162,23 @@ func attack() -> void:
 # TODO: implement all ranged weapons
 func shoot_projectile(weapon: String) -> void:
 	var projectile
-	if weapon == "Wooden-Staff":
+	if weapon in ["Wooden-Staff", "Dark-Staff", "Gravity-Gun", "Elder-Wand"]:
 		projectile = WoodenStaffProjectile.instance()
 		get_parent().add_child(projectile)
 		projectile.source_shooter = self
 		projectile.global_position = self.global_position
 		var vel = Vector2(magic_bullet_speed, 0).rotated(ranged_root.rotation)
 		projectile.set_velocity(vel)
+		magic_shoot_sound.play()
 	elif weapon == "STX-Blaster":
 		projectile = STXBlasterProjectile.instance()
 		get_parent().add_child(projectile)
 		projectile.source_shooter = self
-		projectile.global_position = metaboy.stx_blaster_spawn_pos.global_position
+		projectile.global_position = self.global_position
 		var vel = Vector2(magic_bullet_speed, 0).rotated(ranged_root.rotation)
 		projectile.set_velocity(vel)
 		projectile.set_direction(vel)
+		stx_blaster_shoot_sound.play()
 #	elif weapon == "Cowboy-Left-Pistol":
 #		projectile = BulletProjectile.instance()
 #		get_parent().add_child(projectile)
@@ -208,6 +214,7 @@ func shoot_projectile(weapon: String) -> void:
 		attack_cooldown_timer.stop()
 		attack_cooldown_timer.wait_time = 0.1
 		attack_cooldown_timer.start()
+		gunshot_sound.play()
 	elif weapon == "Bomb" or weapon == "Bazooka" or weapon == "Dynamite-Stick" or weapon == "Snail-Shell":
 		if weapon == "Bomb" or weapon == "Bazooka":
 			projectile = BombProjectile.instance()
@@ -221,6 +228,15 @@ func shoot_projectile(weapon: String) -> void:
 		var vel = Vector2(bomb_speed, 0).rotated(ranged_root.rotation)
 		projectile.set_velocity(vel)
 		projectile.set_direction(vel)
+	else: # Default to STX blaster
+		projectile = STXBlasterProjectile.instance()
+		get_parent().add_child(projectile)
+		projectile.source_shooter = self
+		projectile.global_position = self.global_position
+		var vel = Vector2(magic_bullet_speed, 0).rotated(ranged_root.rotation)
+		projectile.set_velocity(vel)
+		projectile.set_direction(vel)
+		stx_blaster_shoot_sound.play()
 	
 	if projectile != null:
 		projectile.z_index = z_index + 1

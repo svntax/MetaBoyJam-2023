@@ -58,7 +58,7 @@ anims/shot = SubResource( 3 )
 
 [node name="DamageArea" parent="." instance=ExtResource( 3 )]
 collision_layer = 8
-collision_mask = 59
+collision_mask = 57
 damage_type = "Explosive"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea"]
