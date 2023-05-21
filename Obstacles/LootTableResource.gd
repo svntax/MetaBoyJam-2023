@@ -1,7 +1,7 @@
 extends Resource
 class_name LootTableResource
 
-export (Array, Globals.Item) var items = []
+export (Array, String) var items = []
 export (Array, int) var weights = []
 
 func drop_item() -> int:

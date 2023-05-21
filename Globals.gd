@@ -21,12 +21,14 @@ const Hammer = preload("res://Weapons/Hammer.tscn")
 const Knife = preload("res://Weapons/Knife.tscn")
 const Lighter = preload("res://Weapons/Lighter.tscn")
 const Lockpick = preload("res://Weapons/Lockpick.tscn")
-enum Item {HAMMER, KNIFE, LIGHTER, LOCKPICK}
+const HackingTool = preload("res://Weapons/HackingTool.tscn")
+#enum Item {HAMMER, KNIFE, LIGHTER, LOCKPICK, HACKING} # This is causing problems when updating, so use strings instead.
 const ITEM_SCENES = {
-	Item.HAMMER: Hammer,
-	Item.KNIFE: Knife,
-	Item.LIGHTER: Lighter,
-	Item.LOCKPICK: Lockpick
+	"Hammer": Hammer,
+	"Knife": Knife,
+	"Lighter": Lighter,
+	"Lockpick": Lockpick,
+	"Hacking": HackingTool
 }
 
 func get_item_scene(key: int):
