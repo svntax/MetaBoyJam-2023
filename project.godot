@@ -44,7 +44,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="MetaBoyGameJam2"
+config/name="FactoryTakedown"
 run/main_scene="res://UI/LoginScreen.tscn"
 config/icon="res://icon.png"
 

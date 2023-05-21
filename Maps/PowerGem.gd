@@ -7,8 +7,6 @@ onready var hp_bar = $"%HpBar"
 
 onready var hit_sound = $HitSound
 
-onready var navigation_agent = $NavigationAgent2D
-
 onready var hp = 120
 
 export (bool) var use_pathfinding = true

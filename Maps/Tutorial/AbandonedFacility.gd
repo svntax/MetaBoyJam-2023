@@ -7,6 +7,9 @@ onready var obstacles_root = $Obstacles
 onready var enemies_root = $Enemies
 
 onready var game_over_menu = $"%GameOverMenu"
+onready var game_win_menu = $"%GameWinMenu"
+
+onready var game_theme = $MusicTheme
 
 onready var gems_destroyed = 0
 
@@ -17,13 +20,13 @@ func _ready():
 #	metaboy_main.set_attributes({
 #		"Weapon": "STX-Blaster"
 #	})
+	game_theme.play()
 
 func get_player() -> Node2D:
 	return metaboy_main
 
 func _on_player_died() -> void:
 	game_over_menu.display()
-
 
 func _on_PowerGem_power_gem_destroyed():
 	gems_destroyed += 1
@@ -39,4 +42,4 @@ func _on_PowerGem3_power_gem_destroyed():
 
 func check_win_condition():
 	if gems_destroyed >= 3:
-		print("win")
+		game_win_menu.display()
