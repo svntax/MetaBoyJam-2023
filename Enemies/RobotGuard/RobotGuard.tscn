@@ -145,6 +145,13 @@ one_shot = true
 anims/RESET = SubResource( 7 )
 anims/damage = SubResource( 6 )
 
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+
+[node name="FindTargetTimer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="area_entered" from="Body/DetectArea" to="." method="_on_DetectArea_area_entered"]
 [connection signal="body_entered" from="Body/DetectArea" to="." method="_on_DetectArea_body_entered"]
 [connection signal="timeout" from="AlertDurationTimer" to="." method="_on_AlertDurationTimer_timeout"]
+[connection signal="path_changed" from="NavigationAgent2D" to="." method="_on_NavigationAgent2D_path_changed"]
+[connection signal="timeout" from="FindTargetTimer" to="." method="_on_FindTargetTimer_timeout"]

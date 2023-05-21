@@ -1,6 +1,8 @@
 extends KinematicBody2D
 class_name RobotGuard
 
+signal path_changed(path)
+
 onready var body_root = $Body
 onready var state_machine = $StateMachine
 onready var animation_player = $AnimationPlayer
@@ -9,12 +11,19 @@ onready var detect_area = $"%DetectArea"
 onready var damage_immunity_timer = $DamageImmunityTimer
 onready var hp_bar = $"%HpBar"
 onready var alert_duration_timer = $AlertDurationTimer
+onready var find_target_timer = $FindTargetTimer
+
+onready var navigation_agent = $NavigationAgent2D
 
 onready var player = null
 onready var target = player
+onready var target_pos = Vector2()
 onready var speed = 96
 onready var hp = 20
 onready var velocity = Vector2()
+onready var chase_radius = 360
+
+export (bool) var use_pathfinding = true
 
 func _ready():
 	player = get_tree().get_nodes_in_group("Players")[0]
@@ -62,14 +71,28 @@ func move_towards_target() -> void:
 	if target == null:
 		return
 	
-	var dir = global_position.direction_to(target.global_position)
+	var target_pos
+	if use_pathfinding:
+		target_pos = navigation_agent.get_next_location()
+	else:
+		target_pos = target.global_position
+	
+	var dir = global_position.direction_to(target_pos)
 	velocity = dir * speed
 	if velocity.x >= 1:
 		body_root.scale.x = 1
 	elif velocity.x <= -1:
 		body_root.scale.x = -1
-	move_and_slide(velocity)
+	navigation_agent.set_velocity(velocity)
+	
+	if not _arrived_at_location():
+		move_and_slide(velocity)
+	else:
+		pass
 	# TODO: attack if walking towards the player
+
+func _arrived_at_location() -> bool:
+	return navigation_agent.is_navigation_finished()
 
 func _on_ImmunityTimer_timeout():
 	if state_machine.state == state_machine.States.HURT:
@@ -88,3 +111,20 @@ func handle_object_entered(other):
 func _on_AlertDurationTimer_timeout():
 	if state_machine.state == state_machine.States.ALERT:
 		state_machine.set_state(state_machine.States.MOVE)
+
+func _on_FindTargetTimer_timeout():
+	if state_machine.state == state_machine.States.MOVE:
+		if use_pathfinding:
+			update_path_to_target()
+		find_target_timer.start()
+		if target != null:
+			# Target got away
+			if target.global_position.distance_squared_to(self.global_position) >= chase_radius * chase_radius:
+				state_machine.set_state(state_machine.States.IDLE)
+
+func update_path_to_target():
+	if target != null:
+		navigation_agent.set_target_location(target.global_position)
+
+func _on_NavigationAgent2D_path_changed():
+	emit_signal("path_changed", navigation_agent.get_nav_path())
