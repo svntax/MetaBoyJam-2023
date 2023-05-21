@@ -3,6 +3,8 @@ class_name RobotGuard
 
 signal path_changed(path)
 
+export (bool) var facing_left = false
+
 onready var body_root = $Body
 onready var ui_root = $UI
 onready var state_machine = $StateMachine
@@ -42,6 +44,8 @@ func _ready():
 	hp_bar.max_value = hp
 	set_hp(hp)
 	detect_area.add_to_group("DetectAreas")
+	if facing_left:
+		body_root.scale.x = -1
 	
 	melee_damage_area.source_shooter = self
 	melee_damage_area.set_damage_amount(melee_damage)
