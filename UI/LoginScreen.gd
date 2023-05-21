@@ -216,3 +216,6 @@ func _on_WalletDropdown_item_selected(index):
 		else:
 			wallet_info_label.text = "No wallet connected."
 			disconnect_wallet_button.disabled = true
+
+func _on_GuestButton_pressed():
+	get_tree().change_scene("res://UI/CharacterSelectScreen.tscn")

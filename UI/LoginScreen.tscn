@@ -42,6 +42,7 @@ script = ExtResource( 1 )
 script = ExtResource( 10 )
 
 [node name="LoginUI" type="Control" parent="."]
+visible = false
 margin_right = 640.0
 margin_bottom = 360.0
 mouse_filter = 1
@@ -218,7 +219,6 @@ valign = 1
 autowrap = true
 
 [node name="LoginPromptUI" type="Control" parent="."]
-visible = false
 margin_right = 640.0
 margin_bottom = 360.0
 mouse_filter = 1
@@ -247,12 +247,22 @@ alignment = 1
 [node name="LoginProcessButton" type="Button" parent="LoginPromptUI/Buttons"]
 unique_name_in_owner = true
 margin_left = 188.0
-margin_top = 78.0
+margin_top = 42.0
 margin_right = 372.0
-margin_bottom = 134.0
+margin_bottom = 98.0
 rect_min_size = Vector2( 184, 56 )
 size_flags_horizontal = 6
 text = "Connect"
+
+[node name="GuestButton" type="Button" parent="LoginPromptUI/Buttons"]
+unique_name_in_owner = true
+margin_left = 188.0
+margin_top = 114.0
+margin_right = 372.0
+margin_bottom = 170.0
+rect_min_size = Vector2( 184, 56 )
+size_flags_horizontal = 6
+text = "Play as Guest"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/RESET = SubResource( 6 )
@@ -264,3 +274,4 @@ anims/select_third = SubResource( 9 )
 [connection signal="pressed" from="LoginUI/DisconnectWalletButton" to="." method="_on_DisconnectWalletButton_pressed"]
 [connection signal="pressed" from="LoginUI/LoadingCancelButton" to="." method="_on_LoadingCancelButton_pressed"]
 [connection signal="pressed" from="LoginPromptUI/Buttons/LoginProcessButton" to="." method="_on_LoginProcessButton_pressed"]
+[connection signal="pressed" from="LoginPromptUI/Buttons/GuestButton" to="." method="_on_GuestButton_pressed"]

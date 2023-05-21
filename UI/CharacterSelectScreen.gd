@@ -12,12 +12,17 @@ onready var metaboy_stx_tab = $"UI/TabContainer/MetaBoy STX Collection"
 onready var metaboy_stx_grid = $"%MetaBoySTXGrid"
 onready var no_metaboy_stx_label = $"%NoMetaBoySTXLabel"
 
+onready var metaboy_guest_tab = $"UI/TabContainer/MetaBoy (Guests)"
+onready var metaboy_guest_grid = $"%MetaBoyGuestGrid"
+onready var no_metaboy_guest_label = $"%NoMetaBoyGuestLabel"
+
 onready var loading_bg = $FrontLayer/LoadingBg
 onready var loading_label = $FrontLayer/LoadingLabel
 
 var account_object : Dictionary = {}
 onready var num_metaboys = 0
 onready var num_stx_metaboys = 0
+onready var num_guest_metaboys = 0
 
 func _ready():
 	no_metaboy_label.hide()
@@ -37,6 +42,8 @@ func _ready():
 			yield(get_stx_metaboy_tokens(), "completed")
 		else:
 			_parse_stx_metaboy_nfts(MetaBoyGlobals.user_nfts_stacks)
+	
+	_parse_guest_metaboy_nfts()
 	
 	if num_metaboys == 0:
 		no_metaboy_label.show()
@@ -112,7 +119,7 @@ func get_metaboy_tokens() -> void:
 func _parse_metaboy_nfts(tokens: Array) -> void:
 	if tokens.empty():
 		return
-	
+	print(tokens)
 	# Loop through each dictionary of attributes for each MetaBoy and set
 	# the corresponding values.
 
@@ -264,12 +271,101 @@ func _parse_stx_metaboy_nfts(tokens: Array) -> void:
 	
 	_focus_first_grid_element()
 
-func _add_metaboy_entry(mb_name: String, mb_attributes: Dictionary, collection: int) -> Control:
+func _parse_guest_metaboy_nfts() -> void:
+	var first = true
+	var tokens = [
+		{"metaboy": 4916, "Collection": MetaBoyGlobals.Collection.OG},
+		{"metaboy": 296, "Collection": MetaBoyGlobals.Collection.OG},
+		{"metaboy": 1808, "Collection": MetaBoyGlobals.Collection.STX},
+		{"metaboy": 1472, "Collection": MetaBoyGlobals.Collection.STX},
+		{"metaboy": 6741, "Collection": MetaBoyGlobals.Collection.STX},
+		{"metaboy": 610, "Collection": MetaBoyGlobals.Collection.STX},
+		{"metaboy": 6740, "Collection": MetaBoyGlobals.Collection.STX},
+	]
+	
+	var metadata_og = null
+	if MetaBoyGlobals.og_metadata_json.empty():
+		metadata_og = MetaBoyGlobals.load_og_metadata_json()
+		if metadata_og is GDScriptFunctionState:
+			metadata_og = yield(metadata_og, "completed")
+	else:
+		metadata_og = MetaBoyGlobals.og_metadata_json
+	
+	var metadata_stx = null
+	if MetaBoyGlobals.stx_metadata_json.empty():
+		metadata_stx = MetaBoyGlobals.load_stx_metadata_json()
+		if metadata_stx is GDScriptFunctionState:
+			metadata_stx = yield(metadata_stx, "completed")
+	else:
+		metadata_stx = MetaBoyGlobals.stx_metadata_json
+	
+	for nft in tokens:
+		var nft_id = nft.get("metaboy")
+		# NFT ID is an unsigned int, so it starts with "u"
+		nft_id = str(nft_id)
+		if metadata_og != null and metadata_stx != null:
+			var formatted_name = "MetaBoy\n#" + nft_id
+			
+			var nft_properties = {}
+			var nft_json_obj
+			var collection = nft.get("Collection")
+			
+			
+			if collection == MetaBoyGlobals.Collection.STX:
+				# Guest STX metaboys
+				nft_json_obj = MetaBoyGlobals.get_stx_metadata_for_id(int(nft_id))
+				if !nft_json_obj.empty():
+					var attributes : Array = nft_json_obj["attributes"]
+					for attribute in attributes:
+						var trait = attribute["trait"]
+						var value = attribute["value"]
+						nft_properties[trait] = value
+					var metaboy_display = _add_metaboy_entry(formatted_name, nft_properties, nft.get("Collection"), true)
+					if first:
+						first = false
+						metaboy_display.select()
+					num_guest_metaboys += 1
+			else:
+				# Guest OG metaboys
+				nft_json_obj = MetaBoyGlobals.get_og_metadata_for_id(nft.get("metaboy"))
+				if !nft_json_obj.empty():
+					if nft_json_obj.has("Id") and nft_json_obj.has("Traits"):
+						#formatted_name = str(nft_json_obj["Id"])
+						var attributes : Array = nft_json_obj["Traits"]
+						for attribute in attributes:
+							var trait = attribute["TraitType"]
+							var value = attribute["TraitValue"]
+							nft_properties[trait] = value
+						var metaboy_display = _add_metaboy_entry(formatted_name, nft_properties, MetaBoyGlobals.Collection.OG, true)
+						if first:
+							first = false
+							metaboy_display.select()
+						num_guest_metaboys += 1
+	
+	
+	# Update the guests label here so that the label doesn't check the count before
+	# the metadata reading is complete.
+	if num_guest_metaboys > 0:
+		no_metaboy_guest_label.queue_free()
+	else:
+		no_metaboy_guest_label.show()
+	
+	_focus_first_grid_element()
+
+func _add_metaboy_entry(mb_name: String, mb_attributes: Dictionary, collection: int, guest: bool = false) -> Control:
 	var metaboy_display = MetaBoyDisplay.instance()
-	if collection == MetaBoyGlobals.Collection.OG:
-		metaboy_grid.add_child(metaboy_display)
-	elif collection == MetaBoyGlobals.Collection.STX:
-		metaboy_stx_grid.add_child(metaboy_display)
+	if guest:
+		metaboy_guest_grid.add_child(metaboy_display)
+	else:
+		if collection == MetaBoyGlobals.Collection.OG:
+			metaboy_grid.add_child(metaboy_display)
+		elif collection == MetaBoyGlobals.Collection.STX:
+			metaboy_stx_grid.add_child(metaboy_display)
+	if guest:
+		if collection == MetaBoyGlobals.Collection.OG:
+			mb_name += " (OG)"
+		elif collection == MetaBoyGlobals.Collection.STX:
+			mb_name += " (STX)"
 	metaboy_display.set_metaboy_name(mb_name)
 	mb_attributes["Collection"] = collection
 	metaboy_display.set_metaboy_attributes(mb_attributes)
