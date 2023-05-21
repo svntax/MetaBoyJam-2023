@@ -42,6 +42,8 @@ func _on_pressed():
 	interact_menu.set_object_name(object_name)
 	
 	var players = get_tree().get_nodes_in_group("Players")
+	if players.empty():
+		return
 	var current_player = players[0]
 	# Find the character that's currently being controlled
 	for player in players:

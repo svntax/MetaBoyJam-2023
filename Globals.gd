@@ -15,6 +15,20 @@ func _ready():
 	else:
 		loopring_api_key = env_config.get_value("API_KEYS", "loopring")
 
+# Loot drop handling
+const Hammer = preload("res://Weapons/Hammer.tscn")
+const Knife = preload("res://Weapons/Knife.tscn")
+const Lighter = preload("res://Weapons/Lighter.tscn")
+enum Item {HAMMER, KNIFE, LIGHTER}
+const ITEM_SCENES = {
+	Item.HAMMER: Hammer,
+	Item.KNIFE: Knife,
+	Item.LIGHTER: Lighter
+}
+
+func get_item_scene(key: int):
+	return ITEM_SCENES.get(key, null)
+
 enum Trait {SLASHING, EXPLOSIVE, SMASH, PIERCING, HACKING, UNLOCK, FIRE}
 enum Attack {MELEE, RANGED}
 

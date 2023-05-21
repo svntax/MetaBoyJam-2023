@@ -157,7 +157,8 @@ func shoot_projectile(weapon: String) -> void:
 		projectile.set_velocity(vel)
 		projectile.set_direction(vel)
 	
-	projectile.z_index = z_index + 1
+	if projectile != null:
+		projectile.z_index = z_index + 1
 
 func can_attack() -> bool:
 	return attack_cooldown_timer.is_stopped() and in_control

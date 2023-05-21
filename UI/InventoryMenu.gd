@@ -31,7 +31,11 @@ func get_first_empty_slot():
 # Attempt to add an item that the player is trying to pick up.
 func on_item_picked_up(item) -> void:
 	var success = add_item(item)
-	if not success:
+	if success:
+		# Change the item state here.
+		item.interact_pickup_button.in_inventory = true
+		item.animation_player.play("RESET")
+	else:
 		# TODO: tell the player their inventory is full
 		print("Inventory full")
 

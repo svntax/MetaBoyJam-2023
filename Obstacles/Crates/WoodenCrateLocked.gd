@@ -9,6 +9,7 @@ func get_object_name() -> String:
 # Locked wooden crates have picklock as an additional trait
 func on_picklocked() -> void:
 	print("Picklocked")
+	drop_loot()
 	queue_free()
 
 # Overridden just in case this button shows up

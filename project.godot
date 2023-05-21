@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Resource",
+"class": "LootTableResource",
+"language": "GDScript",
+"path": "res://Obstacles/LootTableResource.gd"
+}, {
 "base": "Reference",
 "class": "MetaBoyData",
 "language": "GDScript",
@@ -20,6 +25,7 @@ _global_script_classes=[ {
 "path": "res://Weapons/Projectiles/ShotProjectile.gd"
 } ]
 _global_script_class_icons={
+"LootTableResource": "",
 "MetaBoyData": "",
 "ShotProjectile": ""
 }

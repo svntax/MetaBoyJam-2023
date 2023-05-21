@@ -33,8 +33,6 @@ func get_object_name() -> String:
 	return "Lighter"
 
 func on_picked_up() -> void:
-	interact_pickup_button.in_inventory = true
-	animation_player.play("RESET")
 	emit_signal("picked_up", self)
 
 func on_dropped() -> void:

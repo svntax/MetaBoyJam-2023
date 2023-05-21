@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Obstacles/Crates/iron_crate.png" type="Texture" id=1]
 [ext_resource path="res://Obstacles/Crates/IronCrate.gd" type="Script" id=2]
@@ -6,12 +6,15 @@
 [ext_resource path="res://UI/InteractMenu.tscn" type="PackedScene" id=4]
 [ext_resource path="res://UI/MainUITheme.tres" type="Theme" id=5]
 [ext_resource path="res://UI/FontNormalOutline.tres" type="DynamicFont" id=6]
+[ext_resource path="res://Obstacles/LootTable.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Weapons/DefaultLootTableResource.tres" type="Resource" id=8]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 12, 12.5 )
 
 [node name="IronCrate" type="StaticBody2D"]
 script = ExtResource( 2 )
+loot_table_path = NodePath("LootTable")
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
@@ -48,3 +51,6 @@ theme = ExtResource( 5 )
 custom_fonts/font = ExtResource( 6 )
 text = "Iron Crate"
 align = 1
+
+[node name="LootTable" parent="." instance=ExtResource( 7 )]
+loot_table = ExtResource( 8 )
