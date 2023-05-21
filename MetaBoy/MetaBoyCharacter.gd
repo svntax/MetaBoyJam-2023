@@ -18,6 +18,8 @@ onready var damage_immunity_timer = $DamageImmunityTimer
 onready var gunshot_sound = $GunshotSound
 onready var stx_blaster_shoot_sound = $STXBlasterShootSound
 onready var magic_shoot_sound = $MagicShootSound
+onready var hurt_sound = $HurtSound
+onready var slash_sound = $SlashSound
 
 # Projectiles
 const WoodenStaffProjectile = preload("res://Weapons/Projectiles/WoodenStaffProjectile.tscn")
@@ -73,17 +75,18 @@ func damage(damage_data: Dictionary) -> void:
 		var damage_amount = damage_data.get("damage_amount", 1)
 		set_hp(hp - damage_amount)
 		effect_player.play("hurt")
-		
+		hurt_sound.play()
 		if hp <= 0:
 			hp = 0
 			emit_signal("died")
 			die()
 		else:
-			print("Player hurt")
 			pass#state_machine.set_state(state_machine.States.HURT)
 
 func die() -> void:
 	metaboy.hide()
+	hp_bar.hide()
+	melee_root.hide()
 	melee_damage_area.collision_layer = 0
 	melee_damage_area.collision_mask = 0
 
@@ -152,6 +155,7 @@ func attack() -> void:
 			# All other traits will not have a special interaction, so set the type to -1
 			melee_damage_area.damage_type = -1
 		attack_animation_player.play("slash")
+		slash_sound.play()
 	elif attack_type == Globals.Attack.RANGED:
 		shoot_projectile(metaboy.metaboy_data.weapon)
 		#var will_play_animation = metaboy.play_attack_animation(metaboy.metaboy_data.weapon)

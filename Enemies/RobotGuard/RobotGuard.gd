@@ -4,6 +4,7 @@ class_name RobotGuard
 signal path_changed(path)
 
 onready var body_root = $Body
+onready var ui_root = $UI
 onready var state_machine = $StateMachine
 onready var animation_player = $AnimationPlayer
 onready var effect_player = $EffectAnimationPlayer
@@ -16,6 +17,10 @@ onready var melee_root = $MeleeRoot
 onready var melee_damage_area = $MeleeRoot/SlashDamageArea
 onready var attack_timer = $AttackTimer
 onready var attack_animation_player = $AttackAnimationPlayer
+
+onready var hurt_sound = $HurtSound
+onready var die_sound = $DieSound
+onready var attack_sound = $AttackSound
 
 onready var navigation_agent = $NavigationAgent2D
 
@@ -56,6 +61,7 @@ func damage(damage_data: Dictionary) -> void:
 		damage_immunity_timer.start()
 		var damage_amount = damage_data.get("damage_amount", 1)
 		set_hp(hp - damage_amount)
+		hurt_sound.play()
 		if hp <= 0:
 			hp = 0
 			state_machine.set_state(state_machine.States.DEAD)
@@ -70,7 +76,8 @@ func die() -> void:
 	hide()
 	set_deferred("collision_layer", 0)
 	set_deferred("collision_mask", 0)
-	queue_free()
+	die_sound.play()
+	ui_root.hide()
 
 func check_player_in_range() -> bool:
 	return player in detect_area.get_overlapping_bodies()
@@ -143,4 +150,8 @@ func _on_AttackTimer_timeout():
 		melee_root.rotation = global_position.direction_to(player.global_position).angle()
 		var dist_sq = global_position.distance_squared_to(player.global_position)
 		if dist_sq <= 80 * 80:
+			attack_sound.play()
 			attack_animation_player.play("slash")
+
+func _on_DieSound_finished():
+	queue_free()
