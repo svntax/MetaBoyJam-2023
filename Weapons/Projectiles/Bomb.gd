@@ -37,13 +37,27 @@ func set_source_shooter(source) -> void:
 
 func set_velocity(vel: Vector2) -> void:
 	velocity = vel
+	speed = velocity.length()
 
 func set_direction(_dir: Vector2) -> void:
 	pass # If we need to rotate the projectile sprite
 
 func _physics_process(delta):
 	if alive:
-		move_and_slide(velocity * delta)
+		if speed > 0:
+			speed -= 32
+		elif speed < 0:
+			speed += 32
+		if abs(speed) <= 32:
+			if speed < 32:
+				speed -= 8
+			elif speed > -32:
+				speed += 8
+		if abs(speed) <= 8:
+			speed = 0
+		var new_vel = move_and_slide(velocity)
+		# Friction
+		velocity = velocity.normalized() * speed
 		#global_position += velocity * delta
 
 func damage(_damage_data: Dictionary) -> void:

@@ -16,9 +16,11 @@ onready var damage_immunity_timer = $DamageImmunityTimer
 const WoodenStaffProjectile = preload("res://Weapons/Projectiles/WoodenStaffProjectile.tscn")
 const STXBlasterProjectile = preload("res://Weapons/Projectiles/STXBlasterProjectile.tscn")
 const BulletProjectile = preload("res://Weapons/Projectiles/BulletProjectile.tscn")
+const BombProjectile = preload("res://Weapons/Projectiles/Bomb.tscn")
 
 onready var bullet_speed = 880
 onready var magic_bullet_speed = 360
+onready var bomb_speed = 540
 onready var hp = 100
 
 # If we want to be able to control different characters
@@ -181,6 +183,14 @@ func shoot_projectile(weapon: String) -> void:
 		projectile.source_shooter = self
 		projectile.global_position = metaboy.right_pistol_spawn.global_position
 		var vel = Vector2(bullet_speed, 0).rotated(ranged_root.rotation)
+		projectile.set_velocity(vel)
+		projectile.set_direction(vel)
+	elif weapon == "Bomb" or weapon == "Bazooka":
+		projectile = BombProjectile.instance()
+		get_parent().add_child(projectile)
+		projectile.source_shooter = self
+		projectile.global_position = self.global_position
+		var vel = Vector2(bomb_speed, 0).rotated(ranged_root.rotation)
 		projectile.set_velocity(vel)
 		projectile.set_direction(vel)
 	

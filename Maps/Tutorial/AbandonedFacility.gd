@@ -11,7 +11,7 @@ func _ready():
 	
 	# TEST
 #	metaboy_main.set_attributes({
-#		"Weapon": "Bomb"
+#		"Weapon": "Bazooka"
 #	})
 
 func get_player() -> Node2D:
