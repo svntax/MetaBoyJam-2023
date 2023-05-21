@@ -13,7 +13,7 @@ func _ready():
 	metaboy_main.connect("died", self, "_on_player_died")
 	# TEST
 #	metaboy_main.set_attributes({
-#		"Weapon": "Bazooka"
+#		"Weapon": "Sniper"
 #	})
 
 func get_player() -> Node2D:

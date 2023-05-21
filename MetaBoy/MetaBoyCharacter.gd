@@ -149,10 +149,11 @@ func attack() -> void:
 			melee_damage_area.damage_type = -1
 		attack_animation_player.play("slash")
 	elif attack_type == Globals.Attack.RANGED:
-		var will_play_animation = metaboy.play_attack_animation(metaboy.metaboy_data.weapon)
-		if not will_play_animation:
+		shoot_projectile(metaboy.metaboy_data.weapon)
+		#var will_play_animation = metaboy.play_attack_animation(metaboy.metaboy_data.weapon)
+		#if not will_play_animation:
 			# No animation will play, so attack instantly
-			shoot_projectile(metaboy.metaboy_data.weapon)
+			#shoot_projectile(metaboy.metaboy_data.weapon)
 
 # TODO: implement all ranged weapons
 func shoot_projectile(weapon: String) -> void:
@@ -172,30 +173,41 @@ func shoot_projectile(weapon: String) -> void:
 		var vel = Vector2(magic_bullet_speed, 0).rotated(ranged_root.rotation)
 		projectile.set_velocity(vel)
 		projectile.set_direction(vel)
-	elif weapon == "Cowboy-Left-Pistol":
+#	elif weapon == "Cowboy-Left-Pistol":
+#		projectile = BulletProjectile.instance()
+#		get_parent().add_child(projectile)
+#		projectile.source_shooter = self
+#		projectile.global_position = metaboy.left_pistol_spawn.global_position
+#		var vel = Vector2(bullet_speed, 0).rotated(ranged_root.rotation)
+#		projectile.set_velocity(vel)
+#		projectile.set_direction(vel)
+#	elif weapon == "Cowboy-Right-Pistol":
+#		projectile = BulletProjectile.instance()
+#		get_parent().add_child(projectile)
+#		projectile.source_shooter = self
+#		projectile.global_position = metaboy.right_pistol_spawn.global_position
+#		var vel = Vector2(bullet_speed, 0).rotated(ranged_root.rotation)
+#		projectile.set_velocity(vel)
+#		projectile.set_direction(vel)
+#	elif weapon == "Cowboy-Both-Pistols" or weapon == "Cowboy-Two-Pistols":
+#		projectile = BulletProjectile.instance()
+#		get_parent().add_child(projectile)
+#		projectile.source_shooter = self
+#		projectile.global_position = metaboy.right_pistol_spawn.global_position
+#		var vel = Vector2(bullet_speed, 0).rotated(ranged_root.rotation)
+#		projectile.set_velocity(vel)
+#		projectile.set_direction(vel)
+	elif weapon in ["Cowboy-Left-Pistol", "Cowboy-Right-Pistol","Cowboy-Both-Pistols", "Cowboy-Two-Pistols", "Side-Gun", "Slingshot", "Sniper"]:
 		projectile = BulletProjectile.instance()
 		get_parent().add_child(projectile)
 		projectile.source_shooter = self
-		projectile.global_position = metaboy.left_pistol_spawn.global_position
+		projectile.global_position = self.global_position
 		var vel = Vector2(bullet_speed, 0).rotated(ranged_root.rotation)
 		projectile.set_velocity(vel)
 		projectile.set_direction(vel)
-	elif weapon == "Cowboy-Right-Pistol":
-		projectile = BulletProjectile.instance()
-		get_parent().add_child(projectile)
-		projectile.source_shooter = self
-		projectile.global_position = metaboy.right_pistol_spawn.global_position
-		var vel = Vector2(bullet_speed, 0).rotated(ranged_root.rotation)
-		projectile.set_velocity(vel)
-		projectile.set_direction(vel)
-	elif weapon == "Cowboy-Both-Pistols" or weapon == "Cowboy-Two-Pistols":
-		projectile = BulletProjectile.instance()
-		get_parent().add_child(projectile)
-		projectile.source_shooter = self
-		projectile.global_position = metaboy.right_pistol_spawn.global_position
-		var vel = Vector2(bullet_speed, 0).rotated(ranged_root.rotation)
-		projectile.set_velocity(vel)
-		projectile.set_direction(vel)
+		attack_cooldown_timer.stop()
+		attack_cooldown_timer.wait_time = 0.1
+		attack_cooldown_timer.start()
 	elif weapon == "Bomb" or weapon == "Bazooka" or weapon == "Dynamite-Stick" or weapon == "Snail-Shell":
 		if weapon == "Bomb" or weapon == "Bazooka":
 			projectile = BombProjectile.instance()

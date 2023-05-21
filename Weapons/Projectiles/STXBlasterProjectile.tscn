@@ -1,8 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Weapons/Projectiles/STXBlasterProjectile.gd" type="Script" id=1]
 [ext_resource path="res://Weapons/Projectiles/STXBlasterProjectile.png" type="Texture" id=2]
 [ext_resource path="res://Weapons/DamageArea.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Weapons/Projectiles/explode.wav" type="AudioStream" id=4]
+[ext_resource path="res://Weapons/Projectiles/ExplosionParticles.tscn" type="PackedScene" id=5]
 
 [sub_resource type="Animation" id=2]
 length = 0.001
@@ -41,6 +43,7 @@ height = 13.9999
 
 [node name="STXBlasterProjectile" type="Node2D"]
 script = ExtResource( 1 )
+damage = 10
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( -3, -0.5 )
@@ -63,4 +66,11 @@ position = Vector2( -3, 0 )
 rotation = 1.57079
 shape = SubResource( 4 )
 
+[node name="ExplodeSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+volume_db = -8.0
+
+[node name="ExplosionParticles" parent="." instance=ExtResource( 5 )]
+
 [connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
+[connection signal="finished" from="ExplodeSound" to="." method="_on_ExplodeSound_finished"]
