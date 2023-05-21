@@ -55,6 +55,8 @@ func _handle_object_entered(other) -> void:
 	
 	if other.is_in_group("PickupItems"):
 		return
+	if other.is_in_group("DetectAreas"):
+		return
 	
 	# Damage method is not called here because DamageArea handles it
 	

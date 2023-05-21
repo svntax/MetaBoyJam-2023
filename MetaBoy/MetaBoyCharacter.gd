@@ -9,6 +9,8 @@ onready var attack_cooldown_timer = $AttackCooldownTimer
 onready var melee_damage_area = $MeleeRoot/SlashDamageArea
 onready var melee_root = $MeleeRoot
 onready var ranged_root = $RangedRoot
+onready var hp_bar = $HpBar
+onready var damage_immunity_timer = $DamageImmunityTimer
 
 # Projectiles
 const WoodenStaffProjectile = preload("res://Weapons/Projectiles/WoodenStaffProjectile.tscn")
@@ -17,6 +19,7 @@ const BulletProjectile = preload("res://Weapons/Projectiles/BulletProjectile.tsc
 
 onready var bullet_speed = 880
 onready var magic_bullet_speed = 360
+onready var hp = 100
 
 # If we want to be able to control different characters
 onready var in_control = true
@@ -26,6 +29,9 @@ func _ready():
 	melee_damage_area.source_shooter = self
 	
 	_connect_weapon_attack_signals()
+	
+	hp_bar.max_value = hp
+	set_hp(hp)
 
 func _connect_weapon_attack_signals():
 	_connect_attack_signal("left_pistol_shoot", "_on_attack_animation_signal")
@@ -42,6 +48,27 @@ func _on_attack_animation_signal() -> void:
 
 func is_being_controlled() -> bool:
 	return in_control
+
+func is_alive() -> bool:
+	return hp > 0
+
+func set_hp(value: int) -> void:
+	hp = clamp(value, 0, hp_bar.max_value)
+	hp_bar.value = hp
+
+func damage(damage_data: Dictionary) -> void:
+	if damage_immunity_timer.is_stopped():
+		damage_immunity_timer.start()
+		var damage_amount = damage_data.get("damage_amount", 1)
+		set_hp(hp - damage_amount)
+		if hp <= 0:
+			hp = 0
+			print("Player died")
+			# TODO: player state machine
+			pass#state_machine.set_state(state_machine.States.DEAD)
+		else:
+			print("Player hurt")
+			pass#state_machine.set_state(state_machine.States.HURT)
 
 func set_attributes(attributes: Dictionary) -> void:
 	metaboy.set_metaboy_attributes(attributes)
