@@ -1,6 +1,8 @@
-[gd_resource type="Theme" load_steps=7 format=2]
+[gd_resource type="Theme" load_steps=9 format=2]
 
 [ext_resource path="res://UI/EquipmentPro.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://UI/StyleBoxTexture_NinePatch.tres" type="StyleBox" id=2]
+[ext_resource path="res://MetaBoy/ButtonStyleOutline.tres" type="StyleBox" id=3]
 
 [sub_resource type="DynamicFont" id=10]
 font_data = ExtResource( 1 )
@@ -38,3 +40,8 @@ Button/styles/focus = SubResource( 12 )
 Button/styles/hover = SubResource( 12 )
 Button/styles/normal = SubResource( 11 )
 Button/styles/pressed = SubResource( 13 )
+OptionButton/styles/focus = ExtResource( 3 )
+OptionButton/styles/hover = ExtResource( 3 )
+OptionButton/styles/normal = ExtResource( 3 )
+OptionButton/styles/pressed = ExtResource( 3 )
+PanelContainer/styles/panel = ExtResource( 2 )

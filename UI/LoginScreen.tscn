@@ -1,10 +1,13 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://addons/godot-loopring-sdk/utils/WalletConnector.gd" type="Script" id=1]
 [ext_resource path="res://addons/godot-loopring-sdk/images/Metamask-logo.png" type="Texture" id=2]
 [ext_resource path="res://addons/godot-loopring-sdk/images/lgme.png" type="Texture" id=3]
 [ext_resource path="res://addons/godot-loopring-sdk/images/WalletConnect-logo.png" type="Texture" id=4]
 [ext_resource path="res://UI/LoginScreen.gd" type="Script" id=5]
+[ext_resource path="res://UI/MainUITheme.tres" type="Theme" id=6]
+[ext_resource path="res://UI/FontLargeOutline.tres" type="DynamicFont" id=7]
+[ext_resource path="res://MetaBoy/ButtonStyleOutline.tres" type="StyleBox" id=9]
 [ext_resource path="res://addons/godot-stacks-sdk/utils/WalletConnector.gd" type="Script" id=10]
 
 [sub_resource type="StyleBoxEmpty" id=1]
@@ -35,6 +38,12 @@ loop = true
 [node name="LoginScreen" type="Node2D"]
 script = ExtResource( 5 )
 
+[node name="Bg" type="ColorRect" parent="."]
+margin_right = 648.0
+margin_bottom = 368.0
+mouse_filter = 2
+color = Color( 0.196078, 0.235294, 0.337255, 1 )
+
 [node name="LoopringWalletConnector" type="Node" parent="."]
 script = ExtResource( 1 )
 
@@ -46,6 +55,7 @@ visible = false
 margin_right = 640.0
 margin_bottom = 360.0
 mouse_filter = 1
+theme = ExtResource( 6 )
 
 [node name="WalletButtonsPanel" type="PanelContainer" parent="LoginUI"]
 margin_left = 82.0
@@ -62,6 +72,7 @@ margin_left = 96.0
 margin_top = 24.0
 margin_right = 296.0
 margin_bottom = 72.0
+custom_fonts/font = ExtResource( 7 )
 text = "Connect your wallet"
 valign = 1
 
@@ -145,6 +156,7 @@ margin_right = 183.6
 margin_bottom = 38.4
 rect_min_size = Vector2( 183.6, 38.4 )
 focus_neighbour_right = NodePath("../../../DisconnectWalletButton")
+custom_styles/normal = ExtResource( 9 )
 text = "Hiro Wallet"
 
 [node name="WalletInfo" type="PanelContainer" parent="LoginUI"]
@@ -156,10 +168,10 @@ size_flags_horizontal = 3
 
 [node name="WalletInfoLabel" type="Label" parent="LoginUI/WalletInfo"]
 unique_name_in_owner = true
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 249.0
-margin_bottom = 38.0
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 248.0
+margin_bottom = 43.0
 size_flags_vertical = 0
 text = "Wallet Connected:
 0x1234567890abcdef"
@@ -185,6 +197,7 @@ margin_bottom = 259.0
 focus_neighbour_left = NodePath("../LoopringMenu/Buttons/ButtonMetamask")
 focus_neighbour_top = NodePath("../WalletDropdown")
 size_flags_horizontal = 0
+custom_styles/normal = ExtResource( 9 )
 text = "Disconnect"
 
 [node name="LoadingRect" type="ColorRect" parent="LoginUI"]
@@ -222,12 +235,14 @@ autowrap = true
 margin_right = 640.0
 margin_bottom = 360.0
 mouse_filter = 1
+theme = ExtResource( 6 )
 
 [node name="Title" type="Label" parent="LoginPromptUI"]
 margin_left = 128.0
 margin_top = 24.0
 margin_right = 512.0
 margin_bottom = 72.0
+custom_fonts/font = ExtResource( 7 )
 text = "Main Menu"
 align = 1
 valign = 1
