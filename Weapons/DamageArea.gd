@@ -28,14 +28,14 @@ func _on_body_entered(other):
 	
 	# Normal trigger/activation
 	if other.has_method("damage"):
-		other.damage(damage_data)
+		other.call_deferred("damage", damage_data)
 	
 	# Trait-specific trigger/activation
 	if other.has_method("on_slashed") and damage_type == Globals.Trait.SLASHING:
-		other.on_slashed()
+		other.call_deferred("on_slashed")
 	if other.has_method("on_exploded") and damage_type == Globals.Trait.EXPLOSIVE:
-		other.on_exploded()
+		other.call_deferred("on_exploded")
 	if other.has_method("on_smashed") and damage_type == Globals.Trait.SMASH:
-		other.on_smashed()
+		other.call_deferred("on_smashed")
 	if other.has_method("on_burned") and damage_type == Globals.Trait.FIRE:
-		other.on_burned()
+		other.call_deferred("on_burned")
