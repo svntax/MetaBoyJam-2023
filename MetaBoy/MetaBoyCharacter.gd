@@ -17,6 +17,8 @@ const WoodenStaffProjectile = preload("res://Weapons/Projectiles/WoodenStaffProj
 const STXBlasterProjectile = preload("res://Weapons/Projectiles/STXBlasterProjectile.tscn")
 const BulletProjectile = preload("res://Weapons/Projectiles/BulletProjectile.tscn")
 const BombProjectile = preload("res://Weapons/Projectiles/Bomb.tscn")
+const DynamiteProjectile = preload("res://Weapons/Projectiles/Dynamite.tscn")
+const SnailShellProjectile = preload("res://Weapons/Projectiles/SnailShell.tscn")
 
 onready var bullet_speed = 880
 onready var magic_bullet_speed = 360
@@ -185,8 +187,13 @@ func shoot_projectile(weapon: String) -> void:
 		var vel = Vector2(bullet_speed, 0).rotated(ranged_root.rotation)
 		projectile.set_velocity(vel)
 		projectile.set_direction(vel)
-	elif weapon == "Bomb" or weapon == "Bazooka":
-		projectile = BombProjectile.instance()
+	elif weapon == "Bomb" or weapon == "Bazooka" or weapon == "Dynamite-Stick" or weapon == "Snail-Shell":
+		if weapon == "Bomb" or weapon == "Bazooka":
+			projectile = BombProjectile.instance()
+		elif weapon == "Dynamite-Stick":
+			projectile = DynamiteProjectile.instance()
+		elif weapon == "Snail-Shell":
+			projectile = SnailShellProjectile.instance()
 		get_parent().add_child(projectile)
 		projectile.source_shooter = self
 		projectile.global_position = self.global_position

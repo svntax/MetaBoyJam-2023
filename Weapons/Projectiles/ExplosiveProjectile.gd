@@ -18,7 +18,6 @@ onready var damage_area = $DamageArea
 onready var explosion_area = $ExplosionArea
 onready var explode_timer = $ExplodeTimer
 onready var explode_sound = $ExplodeSound
-onready var animation_player = $AnimationPlayer
 
 func _ready():
 	damage_area.connect("body_entered", self, "_on_body_entered")
@@ -29,7 +28,6 @@ func _ready():
 	})
 	
 	explosion_area.add_to_group("DetectAreas")
-	animation_player.play("idle")
 	explode_timer.start()
 
 func set_source_shooter(source) -> void:
