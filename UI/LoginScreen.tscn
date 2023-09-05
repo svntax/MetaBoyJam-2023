@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://addons/godot-loopring-sdk/utils/WalletConnector.gd" type="Script" id=1]
 [ext_resource path="res://addons/godot-loopring-sdk/images/Metamask-logo.png" type="Texture" id=2]
@@ -7,8 +7,12 @@
 [ext_resource path="res://UI/LoginScreen.gd" type="Script" id=5]
 [ext_resource path="res://UI/MainUITheme.tres" type="Theme" id=6]
 [ext_resource path="res://UI/FontLargeOutline.tres" type="DynamicFont" id=7]
+[ext_resource path="res://UI/Leather-logo-off-white.svg" type="Texture" id=8]
 [ext_resource path="res://MetaBoy/ButtonStyleOutline.tres" type="StyleBox" id=9]
 [ext_resource path="res://addons/godot-stacks-sdk/utils/WalletConnector.gd" type="Script" id=10]
+
+[sub_resource type="StyleBoxFlat" id=10]
+bg_color = Color( 0, 0, 0, 1 )
 
 [sub_resource type="StyleBoxEmpty" id=1]
 
@@ -144,20 +148,33 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = 76.0
-margin_top = 84.0
+margin_top = 100.0
 margin_right = 259.0
-margin_bottom = 262.0
+margin_bottom = 278.0
 rect_min_size = Vector2( 183, 178 )
 custom_constants/separation = 32
 
-[node name="ButtonHiro" type="Button" parent="LoginUI/StacksMenu/Buttons"]
+[node name="ButtonLeather" type="TextureButton" parent="LoginUI/StacksMenu/Buttons"]
 unique_name_in_owner = true
-margin_right = 183.6
-margin_bottom = 38.4
-rect_min_size = Vector2( 183.6, 38.4 )
+margin_left = -1.0
+margin_right = 182.6
+margin_bottom = 24.0
+rect_min_size = Vector2( 183.6, 24 )
 focus_neighbour_right = NodePath("../../../DisconnectWalletButton")
-custom_styles/normal = ExtResource( 9 )
-text = "Hiro Wallet"
+size_flags_horizontal = 4
+texture_normal = ExtResource( 8 )
+expand = true
+stretch_mode = 5
+
+[node name="Bg" type="Panel" parent="LoginUI/StacksMenu/Buttons/ButtonLeather"]
+show_behind_parent = true
+margin_top = -12.0
+margin_right = 184.0
+margin_bottom = 40.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 10 )
 
 [node name="WalletInfo" type="PanelContainer" parent="LoginUI"]
 margin_left = 320.0
